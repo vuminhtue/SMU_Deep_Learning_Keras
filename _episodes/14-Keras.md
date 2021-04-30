@@ -11,20 +11,7 @@ keypoints:
 ---
 
 #Keras
-```python
-def keras_regression_model():
-    # Create model
-    model = Sequential()
-    # Create one hidden layer of 10 nodes and ReLU activation function
-    model.add(Dense(10,activation='relu',input_shape=(n_col,)))
-    model.add(Dense(10,activation='relu'))
-    # Create one ouput layer
-    model.add(Dense(1))
-    
-    # Compile model with adam optimizer and mean squared error as the loss function
-    model.compile(optimizer='adam',loss='mean_squared_error')
-    return model
-```
+Load model and data:
 
 ```python
 import keras
@@ -42,6 +29,24 @@ X = concrete_data.drop("Strength",axis=1)
 y = concrete_data["Strength"]
 ```
 
+Construct regression function
+
+```python
+def keras_regression_model():
+    # Create model
+    model = Sequential()
+    # Create one hidden layer of 10 nodes and ReLU activation function
+    model.add(Dense(10,activation='relu',input_shape=(n_col,)))
+    model.add(Dense(10,activation='relu'))
+    # Create one ouput layer
+    model.add(Dense(1))
+    
+    # Compile model with adam optimizer and mean squared error as the loss function
+    model.compile(optimizer='adam',loss='mean_squared_error')
+    return model
+```
+
+Run 50 time to simulate mse:
 ```python
 mse1=[]
 for i in range(50):
@@ -59,4 +64,10 @@ for i in range(50):
     y_pred = model.predict(X_test)
 
     mse1.append(metrics.mean_squared_error(y_test,y_pred))
+```
+
+Mean and std of 50 mean squared error:
+```python
+print('Mean of 50 mean squared error simulation from regression model is {}'.format(np.around(np.mean(mse1),decimals=3)))
+print('Std of 50 mean squared error simulation from regression model is {}'.format(np.around(np.std(mse1),decimals=3)))
 ```
