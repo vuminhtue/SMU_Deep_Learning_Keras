@@ -1,4 +1,4 @@
-# Machine Learning using Python
+# Deep Learing using Python with Keras Library
 
 This repository generates the corresponding course website based on the original templates
 from [The Carpentries](https://carpentries.org/).
