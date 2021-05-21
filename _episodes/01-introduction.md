@@ -40,7 +40,7 @@ In this workshop we focus on several typical Deep Learning models:
 
 (3) Autoencoders
 
-## Deep Learning Framework
+## Deep Learning Library Framework
 
 https://www.simplilearn.com/keras-vs-tensorflow-vs-pytorch-article
 
