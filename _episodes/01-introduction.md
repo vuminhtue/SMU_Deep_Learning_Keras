@@ -45,6 +45,7 @@ In this workshop we focus on several typical Deep Learning models:
 https://www.simplilearn.com/keras-vs-tensorflow-vs-pytorch-article
 
 (1) Keras
+
 - Keras is an effective high-level neural network Application Programming Interface (API) written in Python. This open-source neural network library is designed to provide fast experimentation with deep neural networks, and it can run on top of CNTK, TensorFlow, and Theano.
 - Keras focuses on being modular, user-friendly, and extensible. It doesn’t handle low-level computations; instead, it hands them off to another library called the Backend.
 - Keras was adopted and integrated into TensorFlow in mid-2017. Users can access it via the tf.keras module. However, the Keras library can still operate separately and independently.
