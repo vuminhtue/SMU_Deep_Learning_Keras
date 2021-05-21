@@ -7,7 +7,7 @@ questions:
 objectives:
 - "Master Keras"
 keypoints:
-- "Regression training", "Keras"
+- "Regression training, keras"
 ---
 ## Train model using Logistic Regression
 - Logistic regression is another technique borrowed by machine learning from the field of statistics. It is the go-to method for binary classification problems (problems with two class values).
