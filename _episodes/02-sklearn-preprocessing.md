@@ -38,6 +38,9 @@ Deep Neural Network (multiple hidden layers)
 - In order to overcome this limitation, Backpropagation calculate the error between output and observered data and propagate the error back into the network and update the weights and biases
 - The Backpropagation process is repeated until number of iteration/epochs is reached or the error between output and observed is within the acceptable threshold.
 
+![image](https://user-images.githubusercontent.com/43855029/119187908-f1605a00-ba47-11eb-8c78-9e459eaadea1.png)
+
+
 ### Activation Functions
 Typical activation functions in Neural Network:
 - Step Function (Binary Function)
