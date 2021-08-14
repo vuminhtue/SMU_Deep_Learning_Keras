@@ -13,6 +13,14 @@ keypoints:
 ## Recap on Artificial Neural Network (ANN)
 Previous ANN in Machine Learning lecture can be found here: https://vuminhtue.github.io/Machine-Learning-Python/10-Neural-Network/index.html
 
+- Neural network is a series of algorithms that endeavors to recognize underlying relationships in a set of data through a process that mimics the way the human brain operates.
+
+- Neuron is a basic unit in a nervous system and is the most important component of the brain.
+
+- In each Neuron, there is a cell body (node), dendrite (input signal) and axon (output signal to other neuron).
+
+- If a Neuron received enough signal, it is then activated to decide whether or not it should transmitt the signal to other neuron or not.
+
 ![image](https://user-images.githubusercontent.com/43855029/114472746-da188c00-9bc0-11eb-913c-9dcd14f872ac.png)
 
 Biological Neural Network
