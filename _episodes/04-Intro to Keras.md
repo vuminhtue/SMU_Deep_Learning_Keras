@@ -74,6 +74,6 @@ model.add(Dense(2), activation = 'sigmoid')
 
 ![image](https://user-images.githubusercontent.com/43855029/129512553-17bf8d4e-5ed4-4180-aaa7-d180c2d093c0.png)
 
-More information can be found [here](https://machinelearningmastery.com/choose-an-activation-function-for-deep-learning/)
+Source on optimal activation function can be found [here](https://machinelearningmastery.com/choose-an-activation-function-for-deep-learning/)
 
 
