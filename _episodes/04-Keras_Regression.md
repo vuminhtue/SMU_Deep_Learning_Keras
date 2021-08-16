@@ -51,13 +51,28 @@ from keras.layers import Dense
 
 #### Sequential
 
+- A **Sequential** model is appropriate for a **plain stack of layers** where each layer has exactly one input tensor and one output tensor.
+- More information can be found [here](https://keras.io/guides/sequential_model/)
+
 #### Dense:
 
 ![image](https://user-images.githubusercontent.com/43855029/129509811-8b951430-dc5f-47d4-a31b-a12b6edade12.png)
-
 
 **Dense** implements the operation: output = activation(dot(input, kernel) + bias); where:
 - activation is the element-wise activation function passed as the activation argument,
 - kernel is a weights matrix created by the layer,
 - bias is a bias vector created by the layer (only applicable if use_bias is True).
-More information on Dense can be found [here](https://keras.io/api/layers/core_layers/dense)
+- More information on Dense can be found [here](https://keras.io/api/layers/core_layers/dense)
+
+### Create a Sequential model with 3 layers:
+
+```python
+# Create a Sequential model
+model = Sequential()
+# Create a first hidden layer, the input for the first hidden layer is input layer which has 3 variables:
+model.add(Dense(50, activation='relu', input_shape=(3,)))
+# Create a second hidden layer, the input for the second hidden layer is the first hidden layer
+model.add(Dense(50, activation='relu'))
+# Create an output layer with only 1 variable:
+model.add(Dense(1))
+```
