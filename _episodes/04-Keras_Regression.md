@@ -9,48 +9,46 @@ objectives:
 keypoints:
 - "Regression training, keras"
 ---
-## Train model using Logistic Regression
-- Logistic regression is another technique borrowed by machine learning from the field of statistics. It is the go-to method for binary classification problems (problems with two class values).
-- Typical binary classification: True/False, Yes/No, Pass/Fail, Spam/No Spam, Male/Female
-- Unlike linear regression, the prediction for the output is transformed using a non-linear function called the logistic function.
-- The standard logistic function has formulation:
+## Using Keras to solve a Regression Model
 
-![image](https://user-images.githubusercontent.com/43855029/114233181-f7dcbb80-994a-11eb-9c89-58d7802d6b49.png)
+### Prepare the data
+Here we use airquality data from ANN and Regression espisode in our previous Machine Learning class with sklearn:
 
-![image](https://user-images.githubusercontent.com/43855029/114233189-fb704280-994a-11eb-9019-8355f5337b37.png)
-
-In this example, we use `breast cancer` data set built-in [sklearn data](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html#sklearn.datasets.load_breast_cancer).
-
-This is a data set that classify breast cancer to `malignant` or `benign` based on different input data on the breast's measurement from 569 patients
-
-Read in data:
 ```python
 import pandas as pd
-from sklearn.datasets import load_breast_cancer
-
-datab = load_breast_cancer()
-X = datab.data
-y = datab.target
-```
-Standardize input data:
-```python
-from sklearn.preprocessing import scale
-Xstd = pd.DataFrame(scale(X,axis=0, with_mean=True, with_std=True, copy=True))
-```
-Partitioning Data to train/test:
-```python
+import numpy as np
+from sklearn.impute import KNNImputer
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(Xstd,y,train_size=0.6,random_state=123)
+
+data_df = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/vuminhtue/Machine-Learning-Python/master/data/r_airquality.csv'))
+
+imputer = KNNImputer(n_neighbors=2, weights="uniform")
+data_knnimpute = pd.DataFrame(imputer.fit_transform(data_df))
+data_knnimpute.columns = data_df.columns
+
+X_train, X_test, y_train, y_test = train_test_split(data_knnimpute[['Temp','Wind','Solar.R']],
+                                                    data_knnimpute['Ozone'],
+                                                    train_size=0.6,random_state=123)
 ```
-Train model using Logistic Regression
+
+Now, we need to scale the input data:
+
 ```python
-from sklearn.Linear_Model import LogisticRegression
-model_LogReg = LogisticRegression().fit(X_train, y_train)
-y_pred = model_LogReg.predict(X_test)
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 ```
-Evaluate output with accurary level:
+
+### Let's use Keras
+
 ```python
-from sklearn import metrics
-metrics.accuracy_score(y_test,y_pred)
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
 ```
-We retrieve the **accuracy = 0.99**
+
+#### Sequential
+
+#### Dense
