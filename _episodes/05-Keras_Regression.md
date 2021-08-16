@@ -90,7 +90,7 @@ The purpose of **loss** functions is to compute the quantity that a model should
 ### Fit model
 
 ```python
-model.fit(X_train_scaled, y_train, epochs=100, verbose=2,
+model.fit(X_train_scaled, y_train, epochs=100, verbose=1,
                validation_data=(X_test_scaled,y_test))
 ```
 
@@ -101,13 +101,13 @@ Here:
 There are alternative way if user do not want to split input data into training/testing:
 
 ```python
-model.fit(X_scaled, y, validation_split=0.3, epochs=100, verbose=2)
+model.fit(X_scaled, y, validation_split=0.3, epochs=100, verbose=1)
 ```
  
 ### Evaluate model
 Evaluate the testing set using given loss function
 ```python
-results = model.evaluate(X_test_scaled, y_test, batch_size=128)
+results = model.evaluate(X_test_scaled, y_test, verbose=1)
 print("test loss, test acc:", results)
 ```
 
