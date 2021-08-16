@@ -62,7 +62,7 @@ model.add(Dense(4, activation='relu'))
 model.add(Dense(1), activation = 'relu')
 ```
 
-### Compile and fit model
+### Compile model
 
 ```python
 model.compile(optimizer='adam', loss='mean_squared_error')
@@ -83,3 +83,47 @@ In addition to **adam**, there are many other optimizer:
 - [Nadam](https://keras.io/api/optimizers/nadam)
 - [Ftrl](https://keras.io/api/optimizers/ftrl)
 
+There are also many other **loss** function. 
+
+The purpose of **loss** functions is to compute the quantity that a model should seek to minimize during training. Detail can be found [here](https://keras.io/api/losses/)
+
+### Fit model
+
+```python
+model.fit(X_train_scaled, y_train, epochs=100, verbose=2,
+               validation_data=(X_test_scaled,y_test))
+```
+
+Here: 
+- epochs: the number of iteration 
+- verbose: 'auto', 0, 1, or 2. Verbosity mode. 0 = silent, 1 = progress bar, 2 = one line per epoch. 'auto' defaults to 1 for most cases, but 2 when used with ParameterServerStrategy. Note that the progress bar is not particularly useful when logged to a file, so verbose=2 is recommended when not running interactively (eg, in a production environment).
+
+There are alternative way if user do not want to split input data into training/testing:
+
+```python
+model.fit(X_scaled, y, validation_split=0.3, epochs=100, verbose=2)
+```
+ 
+### Evaluate model
+Evaluate the testing set using given loss function
+```python
+results = model.evaluate(X_test_scaled, y_test, batch_size=128)
+print("test loss, test acc:", results)
+```
+
+### Predict output
+```python
+predictions = model.predict(X_test_scaled)
+```
+
+### Save & load keras model
+```python
+from keras.models import load_model
+
+model.save('my_model.keras')  # creates a HDF5 file 'my_model.h5'
+del model  # deletes the existing model
+
+# returns a compiled model
+# identical to the previous one
+model = load_model('my_model.keras')
+```
