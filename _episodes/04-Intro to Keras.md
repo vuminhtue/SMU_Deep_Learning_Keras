@@ -42,8 +42,6 @@ from keras.layers import Dense
 
 ![image](https://user-images.githubusercontent.com/43855029/129509811-8b951430-dc5f-47d4-a31b-a12b6edade12.png)
 
-**Dense** is a fully connected layer;
-
 **Dense** implements the operation: output = activation(dot(input, kernel) + bias); where:
 - activation is the element-wise activation function passed as the activation argument,
 - kernel is a weights matrix created by the layer,
