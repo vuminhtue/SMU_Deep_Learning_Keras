@@ -22,8 +22,8 @@ import keras
 
 - Input layer
 - Dense (fully connected) layers
-- Recurrent layer
-- Convolution layer
+- Recurrent layer (use for model with time series data)
+- Convolution layer (use for model with image data)
 - Other layers
 
 For regular Deep Learning model, we use fully connected or Dense layer:
@@ -62,6 +62,10 @@ model.add(Dense(4, activation='relu'))
 # Create an output layer:
 model.add(Dense(2), activation = 'sigmoid')
 ```
+
+### How about this model?
+
+![image](https://user-images.githubusercontent.com/43855029/129513301-dfb25a8a-32d8-43a1-a6f4-713aa718c2e0.png)
 
 ### Optimal activation function?
 #### For hidden layers:
