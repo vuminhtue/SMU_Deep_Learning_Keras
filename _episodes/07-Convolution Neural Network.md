@@ -34,3 +34,21 @@ keypoints:
 - The image reduction without losing features and easier to process for good prediction
 
 ![image](https://user-images.githubusercontent.com/43855029/129624312-db0f2ce1-4767-4a18-9a02-f5cee4c6cfe5.png)
+
+- So for 3 channel RGB colors, the image size have been reduced:
+
+![image](https://user-images.githubusercontent.com/43855029/129624564-96d6d7e4-6409-4775-ad9d-2bf133fa0396.png)
+
+#### Pooling Layer
+- Similar to the Convolutional Layer, the Pooling layer is responsible for reducing the spatial size of the Convolved Feature.
+- This is to decrease the computational power required to process the data through dimensionality reduction
+- Two types of Pooling: Max Pooling & Average Pooling.
+
+![image](https://user-images.githubusercontent.com/43855029/129624678-75532145-0e90-48d5-9703-c8ee626aa7f4.png)
+
+In which Max Pooling performs a lot better than Average Pooling.
+
+#### Flatten Layer
+- Once the images have passed through Convolution Layer and Pooling Layer, its size has been reduced greatly and ready for MLP training.
+- The image is then flatten to a column vector and passed through feed-forward NN and BackPropagation applied to every iteration.
+- Softmax activation function is applied to classified the multi-output
