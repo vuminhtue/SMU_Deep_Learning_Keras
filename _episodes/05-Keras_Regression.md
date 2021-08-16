@@ -55,11 +55,11 @@ from keras.layers import Dense
 # Create a Sequential model
 model = Sequential()
 # Create a first hidden layer, the input for the first hidden layer is input layer which has 3 variables:
-model.add(Dense(5, activation='relu', input_shape=(3,)))
+model.add(Dense(50, activation='relu', input_shape=(3,)))
 # Create a second hidden layer
-model.add(Dense(4, activation='relu'))
+model.add(Dense(40, activation='relu'))
 # Create an output layer with only 1 variable:
-model.add(Dense(1), activation = 'relu')
+model.add(Dense(1))
 ```
 
 ### Compile model
