@@ -49,6 +49,16 @@ from keras.models import Sequential
 from keras.layers import Dense
 ```
 
+#### Layers in Deep Learning
+
+![image](https://user-images.githubusercontent.com/43855029/129512213-2424ed14-a72f-492e-8597-5976c2ed44c3.png)
+
+- Input layer
+- Dense (fully connected) layers
+- Recurrent layer
+- Convolution layer
+- Other layers
+
 #### Sequential
 
 - A **Sequential** model is appropriate for a **plain stack of layers** where each layer has exactly one input tensor and one output tensor.
@@ -73,8 +83,20 @@ from keras.layers import Dense
 model = Sequential()
 # Create a first hidden layer, the input for the first hidden layer is input layer which has 3 variables:
 model.add(Dense(50, activation='relu', input_shape=(3,)))
-# Create a second hidden layer, the input for the second hidden layer is the first hidden layer
+# Create a second hidden layer
 model.add(Dense(50, activation='relu'))
 # Create an output layer with only 1 variable:
-model.add(Dense(1))
+model.add(Dense(1), activation = 'relu')
 ```
+
+### Optimal activation function?
+#### For hidden layers:
+
+![image](https://user-images.githubusercontent.com/43855029/129512679-34174dd4-8b79-4625-96d9-c85e5ea95c48.png)
+
+#### For output layers:
+
+![image](https://user-images.githubusercontent.com/43855029/129512553-17bf8d4e-5ed4-4180-aaa7-d180c2d093c0.png)
+
+More information can be found [here](https://machinelearningmastery.com/choose-an-activation-function-for-deep-learning/)
+
