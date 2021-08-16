@@ -52,3 +52,9 @@ from keras.layers import Dense
 #### Sequential
 
 #### Dense
+**Dense** implements the operation: output = activation(dot(input, kernel) + bias); where:
+- activation is the element-wise activation function passed as the activation argument,
+- kernel is a weights matrix created by the layer,
+- bias is a bias vector created by the layer (only applicable if use_bias is True).
+
+https://keras.io/api/layers/core_layers/dense/
