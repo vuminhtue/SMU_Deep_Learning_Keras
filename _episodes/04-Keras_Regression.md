@@ -51,7 +51,7 @@ from keras.layers import Dense
 
 #### Layers in Deep Learning
 
-![image](https://user-images.githubusercontent.com/43855029/129512213-2424ed14-a72f-492e-8597-5976c2ed44c3.png)
+![image](https://user-images.githubusercontent.com/43855029/129512909-a8eaa507-4869-4956-8bf9-ac6a5d6b4cd5.png)
 
 - Input layer
 - Dense (fully connected) layers
