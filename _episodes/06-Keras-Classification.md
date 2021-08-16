@@ -27,7 +27,7 @@ X = iris.data
 y = iris.target
 ```
 
-Apply One Hot Encoding to categorize the output:
+### Apply One Hot Encoding to categorize the output:
 
 ```python
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -36,13 +36,13 @@ enc = OneHotEncoder()
 Y = enc.fit_transform(y[:, np.newaxis]).toarray()
 ```
 
-Split data to training/testing:
+### Split data to training/testing:
 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X,Y,train_size=0.6,random_state=123)
 ```
 
-Now, we need to scale the input data:
+### Scale the input data:
 
 ```python
 from sklearn.preprocessing import MinMaxScaler
