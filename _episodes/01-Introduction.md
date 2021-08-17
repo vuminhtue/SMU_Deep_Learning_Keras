@@ -30,10 +30,6 @@ keypoints:
 
 ![image](https://user-images.githubusercontent.com/43855029/119176307-ef42cf00-ba38-11eb-9af6-6a4156be787f.png)
 
-### Compare Shallow and Deep Neural Networks
-
-![image](https://user-images.githubusercontent.com/43855029/129793173-63ded1ac-71bd-4adf-85a7-a51df82bb75d.png)
-
 
 ## Deep Learning Models
 In this workshop we focus on several typical Deep Learning models:
