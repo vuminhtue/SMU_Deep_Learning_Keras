@@ -79,8 +79,26 @@ from keras.datasets import mnist
 
 # load data
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
+# 60,000 number for training
+# 10,000 number for testing
+#Each image has size 28x28 pixel and the RGB color ranges from 0-255
+```
 
-# reshape to be [samples][pixels][width][height]
+Sample ploting:
+```python
+import matplotlib.pyplot as plt
+# pick a sample to plot
+sample = 2
+image = X_train[sample]
+# plot the sample
+fig = plt.figure
+plt.imshow(image)
+plt.show()
+```
+
+
+```python
+# Reshape to be [samples][pixels][width][height]
 X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')
 X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')
 ```
@@ -101,6 +119,9 @@ num_classes = y_test.shape[1] # number of categories
 ```
 
 ### Construct Convolutional Neural Network
+- For Convolution front end, starting with kernel size (5,5) with a number of filter 16 followed by Max Pooling Layer with pool_size = (2,2).
+- The 2D data after first Max Pooling layer is flatten directly.
+
 ```python
 model = Sequential()
 model.add(Conv2D(16, (5, 5), strides=(1, 1), activation='relu', input_shape=(28, 28, 1)))
