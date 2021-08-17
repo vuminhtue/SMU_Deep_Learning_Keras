@@ -133,21 +133,21 @@ X_test = X_test / 255
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
 
-num_classes = y_test.shape[1] # number of categories
+no_class = y_test.shape[1] # number of categories from 0-9
 ```
 
 ### Construct Convolutional Neural Network
-- For Convolution front end, starting with kernel size (5,5) with a number of filter 16 followed by Max Pooling Layer with pool_size = (2,2).
+- For Convolution front end, starting with kernel size (5,5) with a number of filter 10 followed by Max Pooling Layer with pool_size = (2,2).
 - The 2D data after first Max Pooling layer is flatten directly.
 
 ```python
 model = Sequential()
-model.add(Conv2D(16, (5, 5), strides=(1, 1), activation='relu', input_shape=(28, 28, 1)))
+model.add(Conv2D(10, (5, 5), strides=(1, 1), activation='relu', input_shape=(28, 28, 1)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 model.add(Flatten())
 model.add(Dense(100, activation='relu'))
-model.add(Dense(num_classes, activation='softmax'))
+model.add(Dense(no_class, activation='softmax'))
 
 # compile model
 model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])
