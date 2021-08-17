@@ -23,10 +23,17 @@ keypoints:
 ![image](https://user-images.githubusercontent.com/43855029/129789560-452539b8-06c7-4a3b-8543-c2f6e5a6f9c6.png)
 [Source](http://henrysprojects.net/projects/conv-net.html)
 
-- A basic CNNs consists of Convolution Layers, Pooling Layers and fully connected Layer (Dense) before output layer
+- A basic CNNs consists of Convolution Layers, Max Pooling Layers and fully connected Layer (Dense) before output layer
 - A simple image can be simply flatten into 1D vector and driven through the regular fully connected NN. However, this requires lot of computational power if the image is large and has more color.
+- Therefore, Convolution Layers and  Max Pooling
 
 ### Convolutional Neural Network (CNN or ConvNet)
+
+- Take a look at the simple gray scale image below which contains 10 pixels on width & height. The color scale has only 2 values (black & white) or (binary -1 and 1), there fore the size of the following image is 10x10x1:
+
+![image](https://user-images.githubusercontent.com/43855029/129790068-408bbad8-8752-4153-9ce3-9099cae1995a.png)
+
+- However, regular image contains colors RGB with each color scale ranges from 0-255, making the size of each image is: n x n x 3 (n = number of pixel).
 
 ![image](https://user-images.githubusercontent.com/43855029/129623983-173558ba-45f5-4a42-972d-a6252f7695e0.png)
 
@@ -39,6 +46,11 @@ keypoints:
 
 ![image](https://user-images.githubusercontent.com/43855029/129624564-96d6d7e4-6409-4775-ad9d-2bf133fa0396.png)
 
+- In other word, the convoluted image from RGB image would look like:
+
+![image](https://user-images.githubusercontent.com/43855029/129791297-fae899e5-1745-4fa0-b348-1785dea769ea.png)
+
+
 ### Pooling Layer
 - Similar to the Convolutional Layer, the Pooling layer is responsible for reducing the spatial size of the Convolved Feature.
 - This is to decrease the computational power required to process the data through dimensionality reduction
@@ -48,12 +60,18 @@ keypoints:
 
 In which Max Pooling performs a lot better than Average Pooling.
 
+- The image after Max Pooling layer would look like:
+
+![image](https://user-images.githubusercontent.com/43855029/129791581-5d9fa47d-1390-44c2-b86a-f66273a9f7ca.png)
+
+
 ### Flatten Layer
-- Once the images have passed through Convolution Layer and Pooling Layer, its size has been reduced greatly and ready for MLP training.
+- Once the images have passed through Convolution Layer and Pooling Layer, its size has been reduced greatly and ready for MLP training (or to another Convolution steps).
 - The image is then flatten to a column vector and passed through feed-forward NN and BackPropagation applied to every iteration.
 - Softmax activation function is applied to classified the multi-output
 
 More information can be found [here](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)
+
 
 ## Application of CNN in hand writing recognition.
 Here we will use the MNIST data set.
@@ -142,5 +160,4 @@ model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_s
 
 # evaluate the model
 scores = model.evaluate(X_test, y_test, verbose=0)
-print("Accuracy: {} \n Error: {}".format(scores[1], 100-scores[1]*100))
 ```
