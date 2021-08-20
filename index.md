@@ -7,14 +7,15 @@ permalink: index.html  # Is the only page that doesn't follow the pattern /:path
 > ## Instructor
 > - **Instructor**: Tue Vu
 > - **Office**: 2119 Barre Hall, Clemson University
-> - **Office Hours**: Wed 8.30-11.30 Zoom
+> - **Office Hours**: Wed 8.30-11.30 Zoom; Fri 9.00-10am
 > - **Email**: tuev@clemson.edu
 {: .prereq}
 
 > ## Workshop Description
-> Machine learning is the science of teaching computers to reproduce the assigned procedure without being explicitly programmed. It has been used in many practical applications such as self-driving cars, speech recognition, email spam classification. It has been widely used not only in engineering (hydroinformatics, bioinformatics, genomics, geosciences and remote sensing, mechatronics) but also in economy, health sciences and even in real estates industry. This workshop provides an overall introduction to machine learning specifically with R programming language which utilizes abundance of R statistical packages. Such topics include: (1) Supervised learning (regression analysis, distance-based algorithm, regularization algorithm, tree-based algorithm, Bayes algorithm, support vector machines, artificial neural networks). (2) Unsupervised learning (clustering, dimensionality reduction). The course will also draw from numerous case studies and applications that can be applied in different engineering programs.
+> This is the introductory workshop on Deep Learning in Python using Keras library. Within this workshop, students will learn how to apply Keras library into Deep Learning.
+> After this workshop, students learn how to use Keras for Classification/Regression problem, application of CNN for image classification, RNN for time series forecasting.
 
-Pre-requisite for the course is “Introduction to R programming”, offered by CITI team.
+Pre-requisite for the course is “Introduction to Machine Learning in Python using scikit-learn”, offered by CITI team.
 >
 {: .prereq}
 
