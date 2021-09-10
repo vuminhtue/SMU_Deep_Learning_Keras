@@ -16,7 +16,7 @@ keypoints:
 ![image](https://user-images.githubusercontent.com/43855029/132886824-3c84c35a-4c2d-4c0e-9529-16e3c4f0a0fe.png)
 [source](https://www.simplilearn.com/tutorials/deep-learning-tutorial/rnn)
 
-- It is specifically designed for Sequential problem **Weather forecast, Stock forecast, auto-completion**
+- It is specifically designed for Sequential problem **Weather forecast, Stock forecast, Image captioning, Natural Language Processing, Speech/Voice Recognition**
 - Some cons of RNN: 
     - Computationally Expensive and large memory requested
     - RNN is sensitive to changes in parameters such as they can grow exponentially (Exploding Gradient) or drop down to zero & stabalized (Vanishing Gradient).
