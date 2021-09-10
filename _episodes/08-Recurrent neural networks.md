@@ -23,9 +23,10 @@ keypoints:
 
 ### Applications
 - It is specifically designed for Sequential problem **Weather forecast, Stock forecast, Image captioning, Natural Language Processing, Speech/Voice Recognition**
-- Some cons of RNN: 
-    - Computationally Expensive and large memory requested
-    - RNN is sensitive to changes in parameters such as they can grow exponentially (Exploding Gradient) or drop down to zero & stabalized (Vanishing Gradient).
+
+### Some Disadvantages of RNN: 
+- Computationally Expensive and large memory requested
+- RNN is sensitive to changes in parameters such as they can grow exponentially (Exploding Gradient) or drop down to zero & stabalized (Vanishing Gradient).
 - In order to resolve the cons of RNN, a method Long-Short Term Memory (LSTM) is proposed.
 
 In this limited workshop, we only cover LSTM for timeseries forecast problem.
