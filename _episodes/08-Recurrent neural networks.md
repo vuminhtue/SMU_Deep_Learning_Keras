@@ -10,12 +10,18 @@ keypoints:
 - "RNN, LSTM, keras"
 ---
 # Recurrent Neural Networks
+### Introduction
 - RNNs are type of Deep Learning models with built-in feedback mechanism. 
 - The output of a particular layer can be **re-fed** as the input in order to predict the output. 
 
 ![image](https://user-images.githubusercontent.com/43855029/132886824-3c84c35a-4c2d-4c0e-9529-16e3c4f0a0fe.png)
 [source](https://www.simplilearn.com/tutorials/deep-learning-tutorial/rnn)
 
+### Types of RNN
+
+![image](https://user-images.githubusercontent.com/43855029/132903689-398ef108-660d-47ba-ae46-b783f203e307.png)
+
+### Applications
 - It is specifically designed for Sequential problem **Weather forecast, Stock forecast, Image captioning, Natural Language Processing, Speech/Voice Recognition**
 - Some cons of RNN: 
     - Computationally Expensive and large memory requested
