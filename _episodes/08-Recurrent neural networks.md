@@ -45,7 +45,7 @@ In this limited workshop, we only cover LSTM for timeseries forecast problem.
 
 ### Comparison between traditional RNN and LSTM
 
-![image](https://user-images.githubusercontent.com/43855029/132912664-6a94103e-1d90-4f5c-8ebd-146af36cf681.png)
+![image](https://user-images.githubusercontent.com/43855029/132913273-1b7d4765-a8f2-4f2d-b3b9-6910d5d15807.png)
 
 ### Step by step walkthrought LSTM:
 [Link](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
