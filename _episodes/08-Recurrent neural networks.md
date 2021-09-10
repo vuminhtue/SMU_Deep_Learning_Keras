@@ -51,3 +51,47 @@ In this limited workshop, we only cover LSTM for timeseries forecast problem.
 [Link](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
 # Hands-on exercise on application of LSTM in temperature forecast
+Here, we will access Keras LSTM to forecast temperature at site name Jena (Germany), given information of temperature and other climate variables.
+The tutorial following the [keras website](https://keras.io/examples/timeseries/timeseries_weather_forecasting/), but rewritten in a simpler way for easy understanding.
+
+### Climate Data
+- Single station named Jena station in Germany.
+- Data consists of 14 climate variables in every 10 minutes
+- Temporal timeframe 8 year: 01/01/2009 - 12/31/2016
+- Data description:
+
+
+![image](https://user-images.githubusercontent.com/43855029/132914704-b2c7ee79-0c99-482a-abfd-cc4575dcfe1b.png)
+
+- Input variables: all 14 climate variables
+- Output or target variable: Temperature at later date
+
+### Objective
+- Using data from previous 5 days, forecast temperature in the next 12 hours
+
+Here are the steps:
+
+#### Loading library:
+
+```python
+import pandas as pd
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.layers import Bidirectional
+ 
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
+from numpy import array    
+```
+
+#### Loading Jena climate station data:
+
+```python
+df = pd.read_csv("jena_climate_2009_2016.csv")
+```
+
