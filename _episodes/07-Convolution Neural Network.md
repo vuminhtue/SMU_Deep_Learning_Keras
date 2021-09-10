@@ -1,5 +1,5 @@
 ---
-title: "Training Convolution model with Keras"
+title: "Convolution Neural Network for image classification"
 teaching: 20
 exercises: 0
 questions:
