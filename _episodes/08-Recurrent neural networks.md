@@ -122,8 +122,8 @@ print(df_knnimpute.isna().sum())
 For training_testing data, I use 70% for training and 30% for testing. For Neural Network, the input data will be normalized.
 
 - Data was collected at interval 10 minutes or 6 times an hour. Thus, resample the input data to hourly with the **sampling_rate** argument: **step=6**
-- Using historical data of 5 days in the past: 5 x 24 x 6 = **720 timestamps**
-- To forecast temperature in the next 12 hours: 12 x 6 = **72 timestamps**
+- Using historical data of 5 days in the past: 5 x 24 x 6 = **720 data points**
+- To forecast temperature in the next 12 hours: 12 x 6 = **72 data points**
 - Data partition to **70% training** and **30% testing** in order of time
 - For Neural Network, following parameters are pre-selected:
    - Learning rate = 0.001
@@ -178,3 +178,4 @@ dataset_train = keras.preprocessing.timeseries_dataset_from_array(
     batch_size=batch_size
 )
 ```
+
