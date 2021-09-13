@@ -69,18 +69,17 @@ The tutorial following the [keras website](https://keras.io/examples/timeseries/
 ### Objective
 - Using data from previous 5 days, forecast temperature in the next 12 hours
 
-Here are the steps:
-
 #### Loading library:
 
 ```python
+import numpy as np
 import pandas as pd
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers import Bidirectional
- 
+
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
@@ -95,3 +94,87 @@ from numpy import array
 df = pd.read_csv("jena_climate_2009_2016.csv")
 ```
 
+#### Check for any missing value
+
+```python
+#Check missing value
+print(df.isnull().sum())
+print(df.isna().sum())
+print(df.min())
+```
+
+There are missing values for wv and max. wv (denoted by -9999). Therefore we need to treat these missing values using KNNImputer method:
+
+```python
+df1 = df.copy()
+#Convert -9999 to nan
+df1[df1==-9999.0]=np.nan
+
+#Treat missing values using KNN Imputer method
+from sklearn.impute import KNNImputer
+imputer = KNNImputer(n_neighbors=15, weights="uniform")
+df_knnimpute = pd.DataFrame(imputer.fit_transform(df1.iloc[:,1:]))
+df_knnimpute.columns=df.columns[1:]
+print(df_knnimpute.isna().sum())
+```
+
+#### Data partitioning
+For training_testing data, I use 70% for training and 30% for testing. For Neural Network, the input data will be normalized.
+
+- Data was collected at interval 10 minutes or 6 times an hour. Thus, resample the input data to hourly with the **sampling_rate** argument: **step=6**
+- Using historical data of 5 days in the past: 5 x 24 x 6 = **720 timestamps**
+- To forecast temperature in the next 12 hours: 12 x 6 = **72 timestamps**
+- Data partition to **70% training** and **30% testing** in order of time
+- For Neural Network, following parameters are pre-selected:
+   - Learning rate = 0.001
+   - Batch size = 256
+   - Epoch = 10
+
+```python
+split_fraction = 0.7
+train_split = int(split_fraction * int(df.shape[0]))
+
+step = 6 
+past = 720
+future = 72
+
+learning_rate = 0.0001
+batch_size = 256
+epochs = 10
+```
+
+- As input data has different range, so there would be the need for **standardization**
+```python
+from sklearn.preprocessing import MinMaxScaler
+scale = MinMaxScaler(feature_range=(0,1))
+scaled_features = pd.DataFrame(scale.fit_transform(df_knnimpute))
+scaled_features.columns = df_knnimpute.columns
+scaled_features.index = df_knnimpute.index
+
+train_data = scaled_features[0:train_split]
+test_data =  scaled_features[train_split:]
+```
+
+#### Selecting input/output for training dataset:
+
+```python
+start = past + future
+end = start + train_split
+
+x_train = train_data
+y_train = scaled_features[start:end]["T (degC)"]
+
+sequence_length = int(past/step)
+```
+
+For training data set, the updated keras (with tensorflow version 2.3 and above) has built-in function to prepare for time series modeling using given batch size and the length for historical data.
+
+```python
+dataset_train = keras.preprocessing.timeseries_dataset_from_array(
+    x_train,
+    y_train,
+    sequence_length=sequence_length,
+    sampling_rate = step,
+    batch_size=batch_size
+)
+```
