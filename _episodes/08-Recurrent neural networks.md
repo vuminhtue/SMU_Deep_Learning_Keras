@@ -128,7 +128,7 @@ Now all input data is clean without any missing value. Next step, we gonna use L
 #### Variable selection with LASSO 
 
 Create set of input/output data. 
-Here, the output variable is "T (degC)". However "Tpot (K)" and "Tdew (degC)" are very similar to the output. Therefore, I would drop them off for now in order to check the influence of ther variables with the output:
+Here, the output variable is "T (degC)". However "Tpot (K)" and "Tdew (degC)" are very similar to the output, resulting in collinearity. Therefore, I would drop them off for now in order to check the influence of ther variables with the output:
 
 ```python
 x = df_knnimpute.drop(['T (degC)','Tpot (K)','Tdew (degC)'],1)
@@ -209,16 +209,15 @@ wd (deg)           0.000000
 Name: 79, dtype: float64
 ```
 
-Here we see that, in addition to 'T (degC)','Tpot (K)','Tdew (degC)', the variables 'p (mbar)', 'rh (%)', 'VPmax (mbar)', 'rho (g/m**3)' also have good influence to the output.
-Therefore, we select all these variables into our input data:
+Here we see that, the variables 'p (mbar)', 'rh (%)', 'VPmax (mbar)', 'rho (g/m**3)' also have good influence to the output.
+Therefore, we select all these variables into our input data together with T (degC):
 
 ```python
-selected_col = [0,1,2,3,4,5,10] 
+selected_col = [0,1,4,5,10] 
 dfnew = df_knnimpute.iloc[:,selected_col]
 dfnew.head()
 ```
-
-![image](https://user-images.githubusercontent.com/43855029/133641136-4e2475b9-dcba-4850-806a-a146d7579a62.png)
+![image](https://user-images.githubusercontent.com/43855029/133648740-4a4d8987-30d6-4ea1-b5a5-d814b4c81c1e.png)
 
 #### Data partitioning
 
@@ -255,8 +254,11 @@ scaled_features.index = dfnew.index
 
 train_data = scaled_features[0:train_split]
 test_data =  scaled_features[train_split:]
+
+train_data.head()
 ```
 
+![image](https://user-images.githubusercontent.com/43855029/133648834-659d6af7-95de-4969-9a03-c6f1f49d4846.png)
 
 #### Selecting input/output for training/testing dataset:
 
@@ -319,7 +321,7 @@ print("Target shape:", targets.numpy().shape)
 ```
 
 ```
-Input shape: (256, 120, 7)
+Input shape: (256, 120, 5)
 Target shape: (256,)
 ```
 
@@ -344,7 +346,7 @@ print("Target shape:", targets_test.numpy().shape)
 ```
 
 ```
-Input shape: (256, 120, 7)
+Input shape: (256, 120, 5)
 Target shape: (256,)
 ```
 
@@ -361,20 +363,19 @@ model.summary()
 ```
 
 ```
-Model: "functional_3"
+Model: "functional_5"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-input_2 (InputLayer)         [(None, 120, 7)]          0         
+input_3 (InputLayer)         [(None, 120, 5)]          0         
 _________________________________________________________________
-lstm_1 (LSTM)                (None, 32)                5120      
+lstm_2 (LSTM)                (None, 32)                4864      
 _________________________________________________________________
-dense_1 (Dense)              (None, 1)                 33        
+dense_2 (Dense)              (None, 1)                 33        
 =================================================================
-Total params: 5,153
-Trainable params: 5,153
+Total params: 4,897
+Trainable params: 4,897
 Non-trainable params: 0
-_________________________________________________________________
 ```
 
 #### Train the LSTM model and vaidate with testing data set:
@@ -387,6 +388,28 @@ history = model.fit(
 )
 ```
 
+```
+Epoch 1/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0343 - val_loss: 0.0158
+Epoch 2/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0060 - val_loss: 0.0047
+Epoch 3/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0039 - val_loss: 0.0044
+Epoch 4/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0035 - val_loss: 0.0044
+Epoch 5/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0033 - val_loss: 0.0045
+Epoch 6/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0032 - val_loss: 0.0046
+Epoch 7/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0030 - val_loss: 0.0043
+Epoch 8/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0029 - val_loss: 0.0043
+Epoch 9/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0029 - val_loss: 0.0042
+Epoch 10/10
+983/983 [==============================] - 69s 70ms/step - loss: 0.0029 - val_loss: 0.0042
+```
 
 #### Visualize the Training & Testing loss with 10 different epoches?
 
@@ -406,4 +429,6 @@ def visualize_loss(history, title):
 
 visualize_loss(history, "Training and Validation Loss")
 ```
+
+![image](https://user-images.githubusercontent.com/43855029/133648369-ed8bd8a9-8e51-438e-860e-bce2c59f8720.png)
 
