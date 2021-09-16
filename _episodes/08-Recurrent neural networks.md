@@ -91,7 +91,7 @@ from numpy import array
 #### Loading Jena climate station data:
 
 ```python
-df = pd.read_csv("jena_climate_2009_2016.csv")
+df = pd.read_csv("/software/src/tuev/data/jena_climate_2009_2016.csv")
 ```
 
 #### Check for any missing value
@@ -103,13 +103,18 @@ print(df.isna().sum())
 print(df.min())
 ```
 
-There are missing values for wv and max. wv (denoted by -9999). Therefore we need to treat these missing values using KNNImputer method:
+There are missing values for wv and max. wv (denoted by -9999). Therefore we need to convert -9999 to nan
 
 ```python
 df1 = df.copy()
 #Convert -9999 to nan
 df1[df1==-9999.0]=np.nan
+print(df1.isna().sum())
+```
 
+Now treat missing value with KNN Imputer 
+
+```
 #Treat missing values using KNN Imputer method
 from sklearn.impute import KNNImputer
 imputer = KNNImputer(n_neighbors=15, weights="uniform")
@@ -118,17 +123,113 @@ df_knnimpute.columns=df.columns[1:]
 print(df_knnimpute.isna().sum())
 ```
 
+Now all input data is clean without any missing value. Next step, we gonna use LASSO for variable selection:
+
+#### Variable selection with LASSO 
+
+Create set of input/output data. 
+Here, the output variable is "T (degC)". However "Tpot (K)" and "Tdew (degC)" are very similar to the output. Therefore, I would drop them off for now in order to check the influence of ther variables with the output:
+
+```python
+x = df_knnimpute.drop(['T (degC)','Tpot (K)','Tdew (degC)'],1)
+y = df_knnimpute.loc[:,"T (degC)"]
+```
+
+Apply LASSO to select the most influence input variables with output:
+
+```python
+from sklearn.linear_model import Lasso
+from sklearn.metrics import mean_squared_error as mse
+
+n_lambda = 100
+lambdas = np.logspace(-6,0, n_lambda)
+
+MSE = []
+coefs = []
+for ld in lambdas:
+    lassocv = Lasso(alpha=ld)
+    model_LS = lassocv.fit(x, y)
+    y_predLS_cv = model_LS.predict(x)    
+    MSE.append(mse(y,y_predLS_cv))
+    coefs.append(model_LS.coef_)        
+```
+
+Plot the MSE with lambda variation:
+
+```python
+plt.scatter(np.log10(lambdas), MSE,color="red")
+plt.title("MSE with Regularization Penalty $\\lambda$ variation ")
+plt.xlabel("log($\\lambda$)")
+plt.ylabel('MSE')
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/43855029/133639140-80d66516-ebfd-4142-bddf-f419c49da276.png)
+
+Plot the corresponding coefficients with vayring lambda:
+
+```python
+coef_df = pd.DataFrame(coefs)
+coef_df.columns = x.columns
+
+ax = plt.gca()
+for i in range(0,coef_df.columns.size):
+    ax.plot(np.log10(lambdas), coef_df.iloc[:,i])
+    
+ax.legend(coef_df.columns,bbox_to_anchor = (1.05, 0.6))
+plt.xlabel("log($\\lambda$)")
+plt.ylabel('Coefficients')
+plt.title('LASSO Coefficients')
+plt.axis('tight')
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/43855029/133639475-34df38f2-8435-49dd-8fcc-a1997c5e1b3b.png)
+
+From the MSE vs lambda plot, log lambda value = -1.2 is the elbow curve for the variable selection.
+The corresponding coefficient with log(lambda)=-1.2 is:
+
+```python
+ind = np.abs((np.log10(lambdas)+1.2)).argmin()
+coef_df.iloc[ind]
+```
+
+```
+p (mbar)           0.249129
+rh (%)            -0.011646
+VPmax (mbar)       0.092128
+VPact (mbar)       0.000000
+VPdef (mbar)       0.011752
+sh (g/kg)          0.000000
+H2OC (mmol/mol)    0.000000
+rho (g/m**3)      -0.199438
+wv (m/s)          -0.000000
+max. wv (m/s)     -0.000000
+wd (deg)           0.000000
+Name: 79, dtype: float64
+```
+
+Here we see that, in addition to 'T (degC)','Tpot (K)','Tdew (degC)', the variables 'p (mbar)', 'rh (%)', 'VPmax (mbar)', 'rho (g/m**3)' also have good influence to the output.
+Therefore, we select all these variables into our input data:
+
+```python
+selected_col = [0,1,2,3,4,5,10] 
+dfnew = df_knnimpute.iloc[:,selected_col]
+dfnew.head()
+```
+
+![image](https://user-images.githubusercontent.com/43855029/133641136-4e2475b9-dcba-4850-806a-a146d7579a62.png)
+
 #### Data partitioning
-For training_testing data, I use 70% for training and 30% for testing. For Neural Network, the input data will be normalized.
 
 - Data was collected at interval 10 minutes or 6 times an hour. Thus, resample the input data to hourly with the **sampling_rate** argument: **step=6**
 - Using historical data of 5 days in the past: 5 x 24 x 6 = **720 data points**
 - To forecast temperature in the next 12 hours: 12 x 6 = **72 data points**
 - Data partition to **70% training** and **30% testing** in order of time
 - For Neural Network, following parameters are pre-selected:
-   - Learning rate = 0.001
-   - Batch size = 256
-   - Epoch = 10
+   - **Learning rate** = 0.001
+   - **Batch size** = 256
+   - **Epoch** = 10
 
 ```python
 split_fraction = 0.7
@@ -143,19 +244,23 @@ batch_size = 256
 epochs = 10
 ```
 
-- As input data has different range, so there would be the need for **standardization**
+As input data has different range, so there would be the need for **standardization**
+
 ```python
 from sklearn.preprocessing import MinMaxScaler
 scale = MinMaxScaler(feature_range=(0,1))
-scaled_features = pd.DataFrame(scale.fit_transform(df_knnimpute))
-scaled_features.columns = df_knnimpute.columns
-scaled_features.index = df_knnimpute.index
+scaled_features = pd.DataFrame(scale.fit_transform(dfnew))
+scaled_features.columns = dfnew.columns
+scaled_features.index = dfnew.index
 
 train_data = scaled_features[0:train_split]
 test_data =  scaled_features[train_split:]
 ```
 
-#### Selecting input/output for training dataset:
+
+#### Selecting input/output for training/testing dataset:
+
+##### Training
 
 ```python
 start = past + future
@@ -167,6 +272,18 @@ y_train = scaled_features[start:end]["T (degC)"]
 sequence_length = int(past/step)
 ```
 
+##### Testing
+
+```python
+x_end = len(test_data) - past - future
+
+label_start = train_split + past + future
+
+x_test = test_data.iloc[:x_end,:]
+y_test = scaled_features.iloc[label_start:]["T (degC)"]
+```
+
+
 For training data set, the updated keras (with tensorflow version 2.3 and above) has built-in function to prepare for time series modeling using given batch size and the length for historical data.
 
 ```python
@@ -177,5 +294,116 @@ dataset_train = keras.preprocessing.timeseries_dataset_from_array(
     sampling_rate = step,
     batch_size=batch_size
 )
+```
+
+#### Using Keras to split training/testing data to different batch:
+Here, we utilize the preprocessing time series feature of keras to split training/testing data into different batch:
+
+##### Training
+
+```python
+dataset_train = keras.preprocessing.timeseries_dataset_from_array(
+    x_train,
+    y_train,
+    sequence_length=sequence_length,
+    sampling_rate = step,
+    batch_size=batch_size,
+)
+
+```python
+for batch in dataset_train.take(1):
+    inputs, targets = batch
+
+print("Input shape:", inputs.numpy().shape)
+print("Target shape:", targets.numpy().shape)
+```
+
+```
+Input shape: (256, 120, 7)
+Target shape: (256,)
+```
+
+##### Testing
+
+```python
+dataset_test = keras.preprocessing.timeseries_dataset_from_array(
+    x_test,
+    y_test,
+    sequence_length=sequence_length,
+    sampling_rate=step,
+    batch_size=batch_size
+)
+```
+
+```python
+for batch in dataset_test.take(1):
+    inputs_test, targets_test = batch
+
+print("Input shape:", inputs_test.numpy().shape)
+print("Target shape:", targets_test.numpy().shape)
+```
+
+```
+Input shape: (256, 120, 7)
+Target shape: (256,)
+```
+
+#### Build Deep learning model with LSTM framework:
+
+```python
+inputs = keras.layers.Input(shape=(inputs.shape[1], inputs.shape[2]))
+lstm_out = keras.layers.LSTM(32, activation="relu")(inputs)
+outputs = keras.layers.Dense(1)(lstm_out)
+
+model = keras.Model(inputs=inputs, outputs=outputs)
+model.compile(optimizer=keras.optimizers.Adam(learning_rate=learning_rate), loss="mse")
+model.summary()    
+```
+
+```
+Model: "functional_3"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_2 (InputLayer)         [(None, 120, 7)]          0         
+_________________________________________________________________
+lstm_1 (LSTM)                (None, 32)                5120      
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 33        
+=================================================================
+Total params: 5,153
+Trainable params: 5,153
+Non-trainable params: 0
+_________________________________________________________________
+```
+
+#### Train the LSTM model and vaidate with testing data set:
+
+```python
+history = model.fit(
+    dataset_train,
+    epochs=epochs,
+    validation_data=dataset_test   
+)
+```
+
+
+#### Visualize the Training & Testing loss with 10 different epoches?
+
+```python
+def visualize_loss(history, title):
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
+    epochs = range(len(loss))
+    plt.figure()
+    plt.plot(epochs, loss, "b", label="Training loss")
+    plt.plot(epochs, val_loss, "r", label="Validation loss")
+    plt.title(title)
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.show()
+
+visualize_loss(history, "Training and Validation Loss")
 ```
 
