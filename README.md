@@ -1,6 +1,5 @@
 # Deep Learing using Python with Keras Library
 This repository prepares the workshop for Clemson University student on Deep Learning with Keras.
-This is in production right now. Do not use!
 
 This repository generates the corresponding course website based on the original templates
 from [The Carpentries](https://carpentries.org/).
