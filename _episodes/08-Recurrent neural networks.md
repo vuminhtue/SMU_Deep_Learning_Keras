@@ -435,6 +435,16 @@ visualize_loss(history, "Training and Validation Loss")
 #### Prediction
 Following the given [code](https://keras.io/examples/timeseries/timeseries_weather_forecasting/) to make predictions for 5 sets of values from validation set:
 
+First, we need to create a rescale function back to original scale for T (degC)
+
+```python
+#Create transformation function to rescale back to original
+scaleT = MinMaxScaler(feature_range=(0,1))
+scaleT.fit_transform(pd.DataFrame(dfnew[:]["T (degC)"]))
+```
+
+Apply plotting:
+
 ```python
 def show_plot(plot_data, delta, title):
     labels = ["History", "True Future", "Model Prediction"]
@@ -454,18 +464,21 @@ def show_plot(plot_data, delta, title):
     plt.legend()
     plt.xlim([time_steps[0], (future + 5) * 2])
     plt.xlabel("Time-Step")
+    plt.ylabel("T (degC)")
     plt.show()
     return
 
 
 for x, y in dataset_test.take(5):
     show_plot(
-        [x[0][:, 1].numpy(), y[0].numpy(), model.predict(x)[0]],
+        #[x[0][:, 1].numpy(), y[0].numpy(), model.predict(x)[0]],
+        [scaleT.inverse_transform(pd.DataFrame(x[0][:, 1])),
+         scaleT.inverse_transform(pd.DataFrame(pd.Series(y[0].numpy()))),
+         scaleT.inverse_transform(pd.DataFrame(model.predict(x)[0]))],         
         12,
         "Single Step Prediction",
     )
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/133816813-01c4b61b-3ae4-4d9f-9448-ed0101e53b83.png)
-![image](https://user-images.githubusercontent.com/43855029/133816849-86e349d3-470b-488d-ae64-f8ca0da24491.png)
+![image](https://user-images.githubusercontent.com/43855029/133819818-ac0fd4a0-fc4f-4e36-9c74-26eac996412f.png)
 
