@@ -147,8 +147,6 @@ X_test = X_test / 255
 ```python
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
-
-no_class = y_test.shape[1] # number of categories from 0-9
 ```
 
 ### Construct Convolutional Neural Network
@@ -162,7 +160,8 @@ model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 model.add(Flatten())
 model.add(Dense(100, activation='relu'))
-model.add(Dense(no_class, activation='softmax'))
+#Output layer contains 10 different number from 0-9
+model.add(Dense(10, activation='softmax'))
 
 # compile model
 model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])
