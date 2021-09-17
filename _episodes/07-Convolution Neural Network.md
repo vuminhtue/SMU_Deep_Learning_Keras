@@ -74,11 +74,21 @@ More information can be found [here](https://towardsdatascience.com/a-comprehens
 
 
 ## Application of CNN in hand writing recognition.
-Here we will use the MNIST data set.
+
+### The MNIST database of handwritten digits
+- The [MNIST](http://yann.lecun.com/exdb/mnist/) database of handwritten digits has training/test set of 60,000/10,000 samples.
+- The digits have been normalized and centered in a fixed-size image
+- It is good database for pattern recognition and image classification task (the entire data is clean and ready for use).
+- Each image were centered in 28 x 28 pixel with RGB color range from 0-255
+- Sample MNIST data:
+
+![image](https://user-images.githubusercontent.com/43855029/133843977-38998202-5688-4053-9acf-93ac7b48da21.png)
+[Source](https://commons.wikimedia.org/wiki/File:MnistExamples.png)
 
 ### Importing libraries
 ```python
 import keras
+import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.utils import to_categorical
@@ -97,9 +107,6 @@ from keras.datasets import mnist
 
 # load data
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
-# 60,000 number for training
-# 10,000 number for testing
-#Each image has size 28x28 pixel and the RGB color ranges from 0-255
 ```
 
 Sample ploting:
@@ -113,6 +120,7 @@ fig = plt.figure
 plt.imshow(image)
 plt.show()
 ```
+![image](https://user-images.githubusercontent.com/43855029/133841615-5e719ba3-19a7-4299-bfc7-3bf166032d98.png)
 
 
 ```python
@@ -154,10 +162,84 @@ model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accu
 ```
 
 ### Train model
+
+Fit the model
+
 ```python
 # fit the model
 model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_size=200, verbose=2)
-
-# evaluate the model
-scores = model.evaluate(X_test, y_test, verbose=0)
 ```
+
+```
+Epoch 1/10
+300/300 - 4s - loss: 0.3221 - accuracy: 0.9114 - val_loss: 0.1155 - val_accuracy: 0.9679
+Epoch 2/10
+300/300 - 3s - loss: 0.0970 - accuracy: 0.9721 - val_loss: 0.0777 - val_accuracy: 0.9757
+Epoch 3/10
+300/300 - 3s - loss: 0.0655 - accuracy: 0.9809 - val_loss: 0.0581 - val_accuracy: 0.9817
+Epoch 4/10
+300/300 - 3s - loss: 0.0515 - accuracy: 0.9844 - val_loss: 0.0522 - val_accuracy: 0.9826
+Epoch 5/10
+300/300 - 3s - loss: 0.0422 - accuracy: 0.9876 - val_loss: 0.0486 - val_accuracy: 0.9846
+Epoch 6/10
+300/300 - 3s - loss: 0.0362 - accuracy: 0.9890 - val_loss: 0.0467 - val_accuracy: 0.9842
+Epoch 7/10
+300/300 - 3s - loss: 0.0310 - accuracy: 0.9905 - val_loss: 0.0419 - val_accuracy: 0.9869
+Epoch 8/10
+300/300 - 3s - loss: 0.0266 - accuracy: 0.9918 - val_loss: 0.0437 - val_accuracy: 0.9857
+Epoch 9/10
+300/300 - 3s - loss: 0.0230 - accuracy: 0.9930 - val_loss: 0.0425 - val_accuracy: 0.9851
+Epoch 10/10
+300/300 - 3s - loss: 0.0209 - accuracy: 0.9937 - val_loss: 0.0413 - val_accuracy: 0.9855
+<tensorflow.python.keras.callbacks.History at 0x146d080ab2e0>
+```
+
+### Evaluate the output
+
+Visualize the training/testing accuracy:
+
+```python
+fig = plt.figure()
+plt.subplot(2,1,1)
+plt.plot(model_CNN.history['accuracy'],"b")
+plt.plot(model_CNN.history['val_accuracy'],"r")
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.legend(['train', 'test'])
+
+plt.subplot(2,1,2)
+plt.plot(model_CNN.history['loss'],"b")
+plt.plot(model_CNN.history['val_loss'],"r")
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'])
+plt.tight_layout()
+fig
+```
+![image](https://user-images.githubusercontent.com/43855029/133843616-7fc0a5ef-668b-4e3f-ac4c-489f738520d3.png)
+
+### Save & reload CNN model
+Save model:
+
+```python
+model.save('/home/tuev/CNN_MNIST.keras')
+```
+
+Reload model:
+```python
+model = keras.models.load_model('/home/tuev/CNN_MNIST.keras')
+```
+
+### Evaluate model with testing data
+```python
+test_loss, test_accuracy = model1.evaluate(X_test, y_test, batch_size=64)
+print('Test loss: %.4f accuracy: %.4f' % (test_loss, test_accuracy))
+```
+
+```
+157/157 [==============================] - 0s 2ms/step - loss: 0.0428 - accuracy: 0.9884
+Test loss: 0.0428 accuracy: 0.9884
+```
+
+The accuracy rate is 0.9884 for testing data means there are 9884 right classification based on 10,000 sample of testing data
