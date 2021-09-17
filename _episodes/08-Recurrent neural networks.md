@@ -433,6 +433,20 @@ visualize_loss(history, "Training and Validation Loss")
 
 ![image](https://user-images.githubusercontent.com/43855029/133833536-c25e5c6d-8fff-4509-9786-aec2f94fd201.png)
 
+#### Save & Load the LSTM trained model
+
+Save LSTM model:
+```python
+model.save('/home/tuev/LSTM_Jena.keras')
+```
+
+Load LSTM model
+
+```python
+model = keras.models.load_model('/home/tuev/LSTM_Jena.keras')
+```
+
+
 #### Prediction
 Modifying the given [code](https://keras.io/examples/timeseries/timeseries_weather_forecasting/) to make predictions for 5 sets of values from validation set:
 
