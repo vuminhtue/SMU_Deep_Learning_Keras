@@ -390,25 +390,25 @@ history = model.fit(
 
 ```
 Epoch 1/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0343 - val_loss: 0.0158
+983/983 [==============================] - 73s 75ms/step - loss: 0.0190 - val_loss: 0.0067
 Epoch 2/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0060 - val_loss: 0.0047
+983/983 [==============================] - 74s 75ms/step - loss: 0.0052 - val_loss: 0.0050
 Epoch 3/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0039 - val_loss: 0.0044
+983/983 [==============================] - 73s 75ms/step - loss: 0.0039 - val_loss: 0.0043
 Epoch 4/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0035 - val_loss: 0.0044
+983/983 [==============================] - 73s 75ms/step - loss: 0.0032 - val_loss: 0.0041
 Epoch 5/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0033 - val_loss: 0.0045
+983/983 [==============================] - 73s 74ms/step - loss: 0.0029 - val_loss: 0.0041
 Epoch 6/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0032 - val_loss: 0.0046
+983/983 [==============================] - 72s 74ms/step - loss: 0.0028 - val_loss: 0.0040
 Epoch 7/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0030 - val_loss: 0.0043
+983/983 [==============================] - 72s 74ms/step - loss: 0.0027 - val_loss: 0.0040
 Epoch 8/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0029 - val_loss: 0.0043
+983/983 [==============================] - 72s 74ms/step - loss: 0.0027 - val_loss: 0.0039
 Epoch 9/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0029 - val_loss: 0.0042
+983/983 [==============================] - 72s 73ms/step - loss: 0.0026 - val_loss: 0.0039
 Epoch 10/10
-983/983 [==============================] - 69s 70ms/step - loss: 0.0029 - val_loss: 0.0042
+983/983 [==============================] - 72s 74ms/step - loss: 0.0026 - val_loss: 0.0038
 ```
 
 #### Visualize the Training & Testing loss with 10 different epoches?
@@ -430,5 +430,42 @@ def visualize_loss(history, title):
 visualize_loss(history, "Training and Validation Loss")
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/133648369-ed8bd8a9-8e51-438e-860e-bce2c59f8720.png)
+![image](https://user-images.githubusercontent.com/43855029/133816494-348f6efb-3049-4653-99a2-a8d5d9239c99.png)
+
+#### Prediction
+Following the given [code](https://keras.io/examples/timeseries/timeseries_weather_forecasting/) to make predictions for 5 sets of values from validation set:
+
+```python
+def show_plot(plot_data, delta, title):
+    labels = ["History", "True Future", "Model Prediction"]
+    marker = [".-", "rx", "go"]
+    time_steps = list(range(-(plot_data[0].shape[0]), 0))
+    if delta:
+        future = delta
+    else:
+        future = 0
+
+    plt.title(title)
+    for i, val in enumerate(plot_data):
+        if i:
+            plt.plot(future, plot_data[i], marker[i], markersize=10, label=labels[i])
+        else:
+            plt.plot(time_steps, plot_data[i].flatten(), marker[i], label=labels[i])
+    plt.legend()
+    plt.xlim([time_steps[0], (future + 5) * 2])
+    plt.xlabel("Time-Step")
+    plt.show()
+    return
+
+
+for x, y in dataset_test.take(5):
+    show_plot(
+        [x[0][:, 1].numpy(), y[0].numpy(), model.predict(x)[0]],
+        12,
+        "Single Step Prediction",
+    )
+```
+
+![image](https://user-images.githubusercontent.com/43855029/133816813-01c4b61b-3ae4-4d9f-9448-ed0101e53b83.png)
+![image](https://user-images.githubusercontent.com/43855029/133816849-86e349d3-470b-488d-ae64-f8ca0da24491.png)
 
