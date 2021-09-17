@@ -122,6 +122,12 @@ plt.show()
 ```
 ![image](https://user-images.githubusercontent.com/43855029/133841615-5e719ba3-19a7-4299-bfc7-3bf166032d98.png)
 
+Before we feed the images to our CNN, we need to do 3 pre-processing of the images:
+- Reshaping the images data to a tensor of shape (num_samples, image_height, image_width, num_channels). In this study 28x28 RGB gray scale images, this is (num_samples, 28, 28, 1), where num_samples = 60,000 for train dataset and num_samples = 10,000 for test dataset.
+- Re-scaling the images data to a values between 0.0 and 1.0 (i.e. each pixel should have value between (0.0 and 1.0] 
+- One-hot-encode the labels — Keras provides a to_categorical() function in it's utils module, which we will use.
+
+#### Preprocessing: reshape to tensor of shape
 
 ```python
 # Reshape to be [samples][pixels][width][height]
@@ -129,14 +135,15 @@ X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')
 X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')
 ```
 
-#### Normalized MINST data
+#### Rescale MINST data to the range of [0,1]
+
 ```python
 X_train = X_train / 255 
 X_test = X_test / 255
 #255 is the max range of RGB color
 ```
 
-### Convert output data to binary
+#### Apply one-hot-encoding the lables using Keras's to_categorial function
 ```python
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
