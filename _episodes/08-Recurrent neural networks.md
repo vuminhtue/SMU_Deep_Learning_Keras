@@ -391,25 +391,25 @@ history = model.fit(
 
 ```
 Epoch 1/10
-983/983 [==============================] - 73s 75ms/step - loss: 0.0190 - val_loss: 0.0067
+983/983 [==============================] - 119s 121ms/step - loss: 0.0082 - val_loss: 0.0049
 Epoch 2/10
-983/983 [==============================] - 74s 75ms/step - loss: 0.0052 - val_loss: 0.0050
+983/983 [==============================] - 119s 121ms/step - loss: 0.0039 - val_loss: 0.0039
 Epoch 3/10
-983/983 [==============================] - 73s 75ms/step - loss: 0.0039 - val_loss: 0.0043
+983/983 [==============================] - 118s 120ms/step - loss: 0.0034 - val_loss: 0.0038
 Epoch 4/10
-983/983 [==============================] - 73s 75ms/step - loss: 0.0032 - val_loss: 0.0041
+983/983 [==============================] - 117s 119ms/step - loss: 0.0031 - val_loss: 0.0038
 Epoch 5/10
-983/983 [==============================] - 73s 74ms/step - loss: 0.0029 - val_loss: 0.0041
+983/983 [==============================] - 117s 119ms/step - loss: 0.0029 - val_loss: 0.0038
 Epoch 6/10
-983/983 [==============================] - 72s 74ms/step - loss: 0.0028 - val_loss: 0.0040
+983/983 [==============================] - 117s 119ms/step - loss: 0.0028 - val_loss: 0.0038
 Epoch 7/10
-983/983 [==============================] - 72s 74ms/step - loss: 0.0027 - val_loss: 0.0040
+983/983 [==============================] - 117s 119ms/step - loss: 0.0027 - val_loss: 0.0038
 Epoch 8/10
-983/983 [==============================] - 72s 74ms/step - loss: 0.0027 - val_loss: 0.0039
+983/983 [==============================] - 117s 119ms/step - loss: 0.0027 - val_loss: 0.0037
 Epoch 9/10
-983/983 [==============================] - 72s 73ms/step - loss: 0.0026 - val_loss: 0.0039
+983/983 [==============================] - 117s 119ms/step - loss: 0.0026 - val_loss: 0.0037
 Epoch 10/10
-983/983 [==============================] - 72s 74ms/step - loss: 0.0026 - val_loss: 0.0038
+983/983 [==============================] - 117s 119ms/step - loss: 0.0026 - val_loss: 0.0037
 ```
 
 #### Visualize the Training & Testing loss with 10 different epoches?
@@ -431,7 +431,7 @@ def visualize_loss(history, title):
 visualize_loss(history, "Training and Validation Loss")
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/133816494-348f6efb-3049-4653-99a2-a8d5d9239c99.png)
+![image](https://user-images.githubusercontent.com/43855029/133833536-c25e5c6d-8fff-4509-9786-aec2f94fd201.png)
 
 #### Prediction
 Modifying the given [code](https://keras.io/examples/timeseries/timeseries_weather_forecasting/) to make predictions for 5 sets of values from validation set:
