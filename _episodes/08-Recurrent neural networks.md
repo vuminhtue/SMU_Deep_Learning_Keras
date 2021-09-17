@@ -262,7 +262,7 @@ train_data.head()
 
 #### Selecting input/output for training/testing dataset:
 
-![image](https://user-images.githubusercontent.com/43855029/133828848-94dbca0f-2aa9-42f9-91f3-d080e71e42fb.png)
+![image](https://user-images.githubusercontent.com/43855029/133829483-8190525b-d278-497c-af5c-73f5a372855d.png)
 
 ##### Training
 
