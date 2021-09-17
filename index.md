@@ -12,8 +12,7 @@ permalink: index.html  # Is the only page that doesn't follow the pattern /:path
 {: .prereq}
 
 > ## Workshop Description
-> This is the introductory workshop on Deep Learning in Python using Keras library. Within this workshop, students will learn how to apply Keras library into Deep Learning.
-> After this workshop, students learn how to use Keras for Classification/Regression problem, application of CNN for image classification, RNN LSTM for time series forecasting.
+> This is the introductory workshop on Deep Learning in Python using Keras library. Within this workshop, students will learn basic introduction to Deep Learning and basic with Keras library for Deep Neural Network. In particular, students learn how to use Keras for Classification/Regression problem, application of CNN for image classification, RNN LSTM for time series forecasting.
 
 Pre-requisite for the course is “Introduction to Machine Learning in Python using scikit-learn”, offered by CITI team.
 >
