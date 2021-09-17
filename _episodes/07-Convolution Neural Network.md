@@ -199,17 +199,17 @@ Epoch 10/10
 Visualize the training/testing accuracy:
 
 ```python
-fig = plt.figure()
+fig = plt.figure(figsize=(8, 10), dpi=80)
 plt.subplot(2,1,1)
-plt.plot(model_CNN.history['accuracy'],"b")
-plt.plot(model_CNN.history['val_accuracy'],"r")
+plt.plot(model_CNN.history['accuracy'],"b-o")
+plt.plot(model_CNN.history['val_accuracy'],"r-d")
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.legend(['train', 'test'])
 
 plt.subplot(2,1,2)
-plt.plot(model_CNN.history['loss'],"b")
-plt.plot(model_CNN.history['val_loss'],"r")
+plt.plot(model_CNN.history['loss'],"b-o")
+plt.plot(model_CNN.history['val_loss'],"r-d")
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
@@ -217,7 +217,8 @@ plt.legend(['train', 'test'])
 plt.tight_layout()
 fig
 ```
-![image](https://user-images.githubusercontent.com/43855029/133843616-7fc0a5ef-668b-4e3f-ac4c-489f738520d3.png)
+
+![image](https://user-images.githubusercontent.com/43855029/133845639-172800ef-ec18-4bf8-a779-1367a3b85519.png)
 
 ### Save & reload CNN model
 Save model:
