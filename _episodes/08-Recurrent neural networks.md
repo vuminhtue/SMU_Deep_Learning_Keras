@@ -479,6 +479,5 @@ for x, y in dataset_test.take(5):
         "Single Step Prediction",
     )
 ```
-
-![image](https://user-images.githubusercontent.com/43855029/133819818-ac0fd4a0-fc4f-4e36-9c74-26eac996412f.png)
+![image](https://user-images.githubusercontent.com/43855029/133819908-9426fe72-7a6e-4b13-8738-82c041b3ca7d.png)
 
