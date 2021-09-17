@@ -262,14 +262,16 @@ train_data.head()
 
 #### Selecting input/output for training/testing dataset:
 
+![image](https://user-images.githubusercontent.com/43855029/133828848-94dbca0f-2aa9-42f9-91f3-d080e71e42fb.png)
+
 ##### Training
 
 ```python
-start = past + future
-end = start + train_split
+start_ytrain = past + future
+end_ytrain = train_split + start_ytrain
 
 x_train = train_data
-y_train = scaled_features[start:end]["T (degC)"]
+y_train = scaled_features[start_ytrain:end_ytrain]["T (degC)"]
 
 sequence_length = int(past/step)
 ```
@@ -277,12 +279,11 @@ sequence_length = int(past/step)
 ##### Testing
 
 ```python
-x_end = len(test_data) - past - future
+start_ytest = end_ytrain
+end_ytest = len(test_data) - past - future
 
-label_start = train_split + past + future
-
-x_test = test_data.iloc[:x_end,:]
-y_test = scaled_features.iloc[label_start:]["T (degC)"]
+x_test = test_data.iloc[:end_ytest,:]
+y_test = scaled_features.iloc[start_ytest:]["T (degC)"]
 ```
 
 
