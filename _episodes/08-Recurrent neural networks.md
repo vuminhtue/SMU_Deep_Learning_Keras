@@ -433,7 +433,7 @@ visualize_loss(history, "Training and Validation Loss")
 ![image](https://user-images.githubusercontent.com/43855029/133816494-348f6efb-3049-4653-99a2-a8d5d9239c99.png)
 
 #### Prediction
-Following the given [code](https://keras.io/examples/timeseries/timeseries_weather_forecasting/) to make predictions for 5 sets of values from validation set:
+Modifying the given [code](https://keras.io/examples/timeseries/timeseries_weather_forecasting/) to make predictions for 5 sets of values from validation set:
 
 First, we need to create a rescale function back to original scale for T (degC)
 
