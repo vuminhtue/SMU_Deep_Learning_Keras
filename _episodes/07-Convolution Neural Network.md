@@ -127,7 +127,7 @@ Before we feed the images to our CNN, we need to do 3 pre-processing of the imag
 - Re-scaling the images data to a values between 0.0 and 1.0 (i.e. each pixel should have value between (0.0 and 1.0] 
 - One-hot-encode the labels — Keras provides a to_categorical() function in it's utils module, which we will use.
 
-#### Preprocessing: reshape to tensor of shape
+#### Preprocessing 1: reshape to tensor of shape
 
 ```python
 # Reshape to be [samples][pixels][width][height]
@@ -135,7 +135,7 @@ X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')
 X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')
 ```
 
-#### Rescale MINST data to the range of [0,1]
+#### Preprocessing 2: Rescale MINST data to the range of [0,1]
 
 ```python
 X_train = X_train / 255 
@@ -143,7 +143,7 @@ X_test = X_test / 255
 #255 is the max range of RGB color
 ```
 
-#### Apply one-hot-encoding the lables using Keras's to_categorial function
+#### Preprocessing 3: Apply one-hot-encoding the lables using Keras's to_categorial function
 ```python
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
