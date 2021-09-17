@@ -23,22 +23,22 @@ Please follow this guideline to create a new conda environment and install **ker
 
 6. Once done, activate the environment and install numpy, pandas, scikit-learn, matplotlib, seaborn and keras
 
-` $ source activate my_keras`
-
-` $ pip install numpy pandas scikit-learn seaborn`
-
-` $ pip install keras`
-
-` $ conda install matplotlib `
+```
+$ source activate my_keras
+$ pip install numpy pandas scikit-learn seaborn
+$ pip install keras
+$ conda install matplotlib 
+```
 
 => Note: while using **my_keras** conda environment, if we are missing anything, we can always come back and update using **pip install**
 or **conda install** method.
 
 7. Last step: create Jupyter Hub kernel in order to work with Jupyter Notebook
 
-`$ conda install jupyter`
-
-`$ python -m ipykernel install --user --name my_keras --display-name "DL_Keras"`
+```
+$ conda install jupyter
+$ python -m ipykernel install --user --name my_keras --display-name "DL_Keras"
+```
 
 8. Open Jupyter Lab in Palmetto, login and see if you have **DL_Keras** kernel created
 https://www.palmetto.clemson.edu/jhub/hub/home
