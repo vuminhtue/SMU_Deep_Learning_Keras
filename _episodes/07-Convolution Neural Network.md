@@ -73,17 +73,17 @@ In which Max Pooling performs a lot better than Average Pooling.
 More information can be found [here](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)
 
 
-## Application of CNN in hand writing recognition.
+## Application of CNN in image classification
 
-### The MNIST database of handwritten digits
-- The [MNIST](http://yann.lecun.com/exdb/mnist/) database of handwritten digits has training/test set of 60,000/10,000 samples.
-- The digits have been normalized and centered in a fixed-size image
+### The CIFAR10 database
+- The [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) database consisting 60,000 color images with 10 different classes
+- Each image has 32 x 32 pixels with color range from 0-255
 - It is good database for pattern recognition and image classification task (the entire data is clean and ready for use).
-- Each image were centered in 28 x 28 pixel with RGB color range from 0-255
-- Sample MNIST data:
+- The dataset was divided into 50,000 images for training and 10,000 images for testing
+- The 10 classes are **airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck**
+- Sample CIFAR10 data:
 
-![image](https://user-images.githubusercontent.com/43855029/133843977-38998202-5688-4053-9acf-93ac7b48da21.png)
-[Source](https://commons.wikimedia.org/wiki/File:MnistExamples.png)
+![image](https://user-images.githubusercontent.com/43855029/134049153-99879363-c761-4b1d-b378-78186024bb95.png)[Source](https://www.cs.toronto.edu/~kriz/cifar.html)
 
 ### Importing libraries
 ```python
@@ -91,7 +91,7 @@ import keras
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.utils import to_categorical
+
 ```
 
 ### Import convolution, max pooling and flatten as mentioned above:
@@ -101,62 +101,45 @@ from keras.layers.convolutional import MaxPooling2D # Max pooling layers to furt
 from keras.layers import Flatten # flatten data from 2D to column for Dense layer
 ```
 
-### Load MINST data
+### Load CIFAR10 data
 ```python
-from keras.datasets import mnist
+from keras.datasets import cifar10
 
 # load data
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
+(X_train, y_train), (X_test, y_test) = cifar10.load_data()
 ```
 
 Sample ploting:
 ```python
-import matplotlib.pyplot as plt
-# pick a sample to plot
-sample = 2
-image = X_train[sample]
-# plot the sample
-fig = plt.figure
-plt.imshow(image)
+class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer',
+               'dog', 'frog', 'horse', 'ship', 'truck']
+
+plt.figure(figsize=(10,10))
+for i in range(49):
+    plt.subplot(7,7,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(X_train[i])
+    # The CIFAR labels happen to be arrays, which is why you need the extra index    
+    plt.xlabel(class_names[y_train[i][0]])
 plt.show()
 ```
-![image](https://user-images.githubusercontent.com/43855029/133841615-5e719ba3-19a7-4299-bfc7-3bf166032d98.png)
 
-Before we feed the images to our CNN, we need to do 3 pre-processing of the images:
-- Reshaping the images data to a tensor of shape (num_samples, image_height, image_width, num_channels). In this study 28x28 RGB gray scale images, this is (num_samples, 28, 28, 1), where num_samples = 60,000 for train dataset and num_samples = 10,000 for test dataset.
-- Re-scaling the images data to a values between 0.0 and 1.0 (i.e. each pixel should have value between (0.0 and 1.0] 
-- One-hot-encode the labels — Keras provides a to_categorical() function in it's utils module, which we will use.
+![image](https://user-images.githubusercontent.com/43855029/134049444-f95cd292-9b5f-40f9-852c-6bbe0a724d78.png)
 
-#### Preprocessing 1: reshape to tensor of shape
-
-```python
-# Reshape to be [samples][pixels][width][height]
-X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')
-X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')
-```
-
-#### Preprocessing 2: Rescale MINST data to the range of [0,1]
-
-```python
-X_train = X_train / 255 
-X_test = X_test / 255
-#255 is the max range of RGB color
-```
-
-#### Preprocessing 3: Apply one-hot-encoding the lables using Keras's to_categorial function
-```python
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
-```
 
 ### Construct Convolutional Neural Network
-- For Convolution front end, starting with kernel size (5,5) with a number of filter 10 followed by Max Pooling Layer with pool_size = (2,2).
-- The 2D data after first Max Pooling layer is flatten directly.
+- For Convolution front end, starting with kernel size (3,3) with a number of filter 10 followed by Max Pooling Layer with pool_size = (2,2).
+- The 2D data after two Max Pooling layer is flatten directly.
 
 ```python
 model = Sequential()
-model.add(Conv2D(10, (5, 5), strides=(1, 1), activation='relu', input_shape=(28, 28, 1)))
+model.add(Conv2D(10, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D((2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
 
 model.add(Flatten())
 model.add(Dense(100, activation='relu'))
@@ -164,7 +147,10 @@ model.add(Dense(100, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
 # compile model
-model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])
+model.compile(optimizer='adam',
+              loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),              
+              metrics=['accuracy'])
+              
 ```
 
 ### Train model
@@ -173,31 +159,31 @@ Fit the model
 
 ```python
 # fit the model
-model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, batch_size=200, verbose=2)
+model_CNN = model.fit(X_train, y_train, epochs=10, 
+                    validation_data=(X_test, y_test))
 ```
 
 ```
 Epoch 1/10
-300/300 - 4s - loss: 0.3221 - accuracy: 0.9114 - val_loss: 0.1155 - val_accuracy: 0.9679
+1563/1563 [==============================] - 10s 7ms/step - loss: 2.0117 - accuracy: 0.3432 - val_loss: 1.5362 - val_accuracy: 0.4350
 Epoch 2/10
-300/300 - 3s - loss: 0.0970 - accuracy: 0.9721 - val_loss: 0.0777 - val_accuracy: 0.9757
+1563/1563 [==============================] - 10s 6ms/step - loss: 1.4181 - accuracy: 0.4910 - val_loss: 1.3415 - val_accuracy: 0.5173
 Epoch 3/10
-300/300 - 3s - loss: 0.0655 - accuracy: 0.9809 - val_loss: 0.0581 - val_accuracy: 0.9817
+1563/1563 [==============================] - 10s 6ms/step - loss: 1.2498 - accuracy: 0.5558 - val_loss: 1.2070 - val_accuracy: 0.5794
 Epoch 4/10
-300/300 - 3s - loss: 0.0515 - accuracy: 0.9844 - val_loss: 0.0522 - val_accuracy: 0.9826
+1563/1563 [==============================] - 10s 6ms/step - loss: 1.1396 - accuracy: 0.6031 - val_loss: 1.1446 - val_accuracy: 0.6008
 Epoch 5/10
-300/300 - 3s - loss: 0.0422 - accuracy: 0.9876 - val_loss: 0.0486 - val_accuracy: 0.9846
+1563/1563 [==============================] - 10s 6ms/step - loss: 1.0403 - accuracy: 0.6388 - val_loss: 1.0624 - val_accuracy: 0.6325
 Epoch 6/10
-300/300 - 3s - loss: 0.0362 - accuracy: 0.9890 - val_loss: 0.0467 - val_accuracy: 0.9842
+1563/1563 [==============================] - 10s 6ms/step - loss: 0.9659 - accuracy: 0.6657 - val_loss: 1.0405 - val_accuracy: 0.6483
 Epoch 7/10
-300/300 - 3s - loss: 0.0310 - accuracy: 0.9905 - val_loss: 0.0419 - val_accuracy: 0.9869
+1563/1563 [==============================] - 10s 6ms/step - loss: 0.8978 - accuracy: 0.6904 - val_loss: 1.0140 - val_accuracy: 0.6605
 Epoch 8/10
-300/300 - 3s - loss: 0.0266 - accuracy: 0.9918 - val_loss: 0.0437 - val_accuracy: 0.9857
+1563/1563 [==============================] - 10s 6ms/step - loss: 0.8466 - accuracy: 0.7062 - val_loss: 1.0174 - val_accuracy: 0.6587
 Epoch 9/10
-300/300 - 3s - loss: 0.0230 - accuracy: 0.9930 - val_loss: 0.0425 - val_accuracy: 0.9851
+1563/1563 [==============================] - 10s 6ms/step - loss: 0.7965 - accuracy: 0.7241 - val_loss: 1.0165 - val_accuracy: 0.6594
 Epoch 10/10
-300/300 - 3s - loss: 0.0209 - accuracy: 0.9937 - val_loss: 0.0413 - val_accuracy: 0.9855
-<tensorflow.python.keras.callbacks.History at 0x146d080ab2e0>
+1563/1563 [==============================] - 10s 6ms/step - loss: 0.7515 - accuracy: 0.7407 - val_loss: 1.0503 - val_accuracy: 0.6645
 ```
 
 ### Evaluate the output
@@ -207,15 +193,15 @@ Visualize the training/testing accuracy:
 ```python
 fig = plt.figure(figsize=(8, 10), dpi=80)
 plt.subplot(2,1,1)
-plt.plot(model_CNN.history['accuracy'],"b-o")
-plt.plot(model_CNN.history['val_accuracy'],"r-d")
+plt.plot(history.history['accuracy'],"b-o")
+plt.plot(history.history['val_accuracy'],"r-d")
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.legend(['train', 'test'])
 
 plt.subplot(2,1,2)
-plt.plot(model_CNN.history['loss'],"b-o")
-plt.plot(model_CNN.history['val_loss'],"r-d")
+plt.plot(history.history['loss'],"b-o")
+plt.plot(history.history['val_loss'],"r-d")
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
@@ -224,29 +210,30 @@ plt.tight_layout()
 fig
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/133845639-172800ef-ec18-4bf8-a779-1367a3b85519.png)
+![image](https://user-images.githubusercontent.com/43855029/134049936-c007a7b5-5dbf-4f23-b2f0-8c9ed7ab8de1.png)
+
 
 ### Save & reload CNN model
 Save model:
 
 ```python
-model.save('/home/tuev/CNN_MNIST.keras')
+model.save('/home/tuev/CNN_CIFAR10.keras')
 ```
 
 Reload model:
 ```python
-model = keras.models.load_model('/home/tuev/CNN_MNIST.keras')
+model = keras.models.load_model('/home/tuev/CNN_CIFAR10.keras')
 ```
 
 ### Evaluate model with testing data
 ```python
-test_loss, test_accuracy = model1.evaluate(X_test, y_test, batch_size=64)
+test_loss, test_accuracy = model_CNN.evaluate(X_test, y_test, batch_size=64)
 print('Test loss: %.4f accuracy: %.4f' % (test_loss, test_accuracy))
 ```
 
 ```
-157/157 [==============================] - 0s 2ms/step - loss: 0.0428 - accuracy: 0.9884
-Test loss: 0.0428 accuracy: 0.9884
+157/157 [==============================] - 0s 3ms/step - loss: 1.0503 - accuracy: 0.6645
+Test loss: 1.0503 accuracy: 0.6645
 ```
 
-The accuracy rate is 0.9884 for testing data means there are 9884 right classification based on 10,000 sample of testing data
+The accuracy rate is 0.6645 for testing data means there are 6645 right classification based on 10,000 sample of testing data
