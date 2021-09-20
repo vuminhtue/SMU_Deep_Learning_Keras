@@ -114,6 +114,8 @@ Sample ploting:
 class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck']
 
+import matplotlib.pyplot as plt
+
 plt.figure(figsize=(10,10))
 for i in range(49):
     plt.subplot(7,7,i+1)
