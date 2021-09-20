@@ -91,7 +91,7 @@ import keras
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
-
+from keras.utils import to_categorical
 ```
 
 ### Import convolution, max pooling and flatten as mentioned above:
@@ -107,6 +107,9 @@ from keras.datasets import cifar10
 
 # load data
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
+# Normalized data to range (0, 1):
+X_train, X_test = X_train/255, X_test/255
 ```
 
 Sample ploting:
@@ -149,10 +152,7 @@ model.add(Dense(100, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
 # compile model
-model.compile(optimizer='adam',
-              loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),              
-              metrics=['accuracy'])
-              
+model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])                            
 ```
 
 ### Train model
@@ -167,25 +167,25 @@ model_CNN = model.fit(X_train, y_train, epochs=10,
 
 ```
 Epoch 1/10
-1563/1563 [==============================] - 10s 7ms/step - loss: 2.0117 - accuracy: 0.3432 - val_loss: 1.5362 - val_accuracy: 0.4350
+1563/1563 [==============================] - 8s 5ms/step - loss: 1.5480 - accuracy: 0.4378 - val_loss: 1.2536 - val_accuracy: 0.5535
 Epoch 2/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 1.4181 - accuracy: 0.4910 - val_loss: 1.3415 - val_accuracy: 0.5173
+1563/1563 [==============================] - 7s 5ms/step - loss: 1.1785 - accuracy: 0.5824 - val_loss: 1.0813 - val_accuracy: 0.6182
 Epoch 3/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 1.2498 - accuracy: 0.5558 - val_loss: 1.2070 - val_accuracy: 0.5794
+1563/1563 [==============================] - 7s 5ms/step - loss: 1.0222 - accuracy: 0.6380 - val_loss: 0.9720 - val_accuracy: 0.6594
 Epoch 4/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 1.1396 - accuracy: 0.6031 - val_loss: 1.1446 - val_accuracy: 0.6008
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.9332 - accuracy: 0.6724 - val_loss: 0.9235 - val_accuracy: 0.6763
 Epoch 5/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 1.0403 - accuracy: 0.6388 - val_loss: 1.0624 - val_accuracy: 0.6325
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.8654 - accuracy: 0.6980 - val_loss: 0.9317 - val_accuracy: 0.6739
 Epoch 6/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 0.9659 - accuracy: 0.6657 - val_loss: 1.0405 - val_accuracy: 0.6483
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.8059 - accuracy: 0.7185 - val_loss: 0.8877 - val_accuracy: 0.6913
 Epoch 7/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 0.8978 - accuracy: 0.6904 - val_loss: 1.0140 - val_accuracy: 0.6605
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.7568 - accuracy: 0.7351 - val_loss: 0.9059 - val_accuracy: 0.6940
 Epoch 8/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 0.8466 - accuracy: 0.7062 - val_loss: 1.0174 - val_accuracy: 0.6587
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.7129 - accuracy: 0.7500 - val_loss: 0.8622 - val_accuracy: 0.7117
 Epoch 9/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 0.7965 - accuracy: 0.7241 - val_loss: 1.0165 - val_accuracy: 0.6594
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.6730 - accuracy: 0.7640 - val_loss: 0.8632 - val_accuracy: 0.7083
 Epoch 10/10
-1563/1563 [==============================] - 10s 6ms/step - loss: 0.7515 - accuracy: 0.7407 - val_loss: 1.0503 - val_accuracy: 0.6645
+1563/1563 [==============================] - 7s 5ms/step - loss: 0.6345 - accuracy: 0.7790 - val_loss: 0.8900 - val_accuracy: 0.7066
 ```
 
 ### Evaluate the output
@@ -195,15 +195,15 @@ Visualize the training/testing accuracy:
 ```python
 fig = plt.figure(figsize=(8, 10), dpi=80)
 plt.subplot(2,1,1)
-plt.plot(history.history['accuracy'],"b-o")
-plt.plot(history.history['val_accuracy'],"r-d")
+plt.plot(model_CNN.history['accuracy'],"b-o")
+plt.plot(model_CNN.history['val_accuracy'],"r-d")
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.legend(['train', 'test'])
 
 plt.subplot(2,1,2)
-plt.plot(history.history['loss'],"b-o")
-plt.plot(history.history['val_loss'],"r-d")
+plt.plot(model_CNN.history['loss'],"b-o")
+plt.plot(model_CNN.history['val_loss'],"r-d")
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
@@ -212,30 +212,30 @@ plt.tight_layout()
 fig
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/134049936-c007a7b5-5dbf-4f23-b2f0-8c9ed7ab8de1.png)
+![image](https://user-images.githubusercontent.com/43855029/134068849-92926fde-2d11-4da9-af7a-0a0fa6823657.png)
 
 
 ### Save & reload CNN model
 Save model:
 
 ```python
-model.save('/home/tuev/CNN_CIFAR10.keras')
+model.save('CNN_CIFAR10.keras')
 ```
 
 Reload model:
 ```python
-model = keras.models.load_model('/home/tuev/CNN_CIFAR10.keras')
+model_new = keras.models.load_model('CNN_CIFAR10.keras')
 ```
 
 ### Evaluate model with testing data
 ```python
-test_loss, test_accuracy = model_CNN.evaluate(X_test, y_test, batch_size=64)
+test_loss, test_accuracy = model_new.evaluate(X_test, y_test, batch_size=64)
 print('Test loss: %.4f accuracy: %.4f' % (test_loss, test_accuracy))
 ```
 
 ```
-157/157 [==============================] - 0s 3ms/step - loss: 1.0503 - accuracy: 0.6645
-Test loss: 1.0503 accuracy: 0.6645
+313/313 [==============================] - 1s 2ms/step - loss: 0.8900 - accuracy: 0.7066
+Test loss: 0.8900 accuracy: 0.7066
 ```
 
-The accuracy rate is 0.6645 for testing data means there are 6645 right classification based on 10,000 sample of testing data
+The accuracy rate is 0.7066 for testing data means there are 7066 right classification based on 10,000 sample of testing data
