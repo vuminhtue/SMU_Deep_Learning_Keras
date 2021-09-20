@@ -239,3 +239,22 @@ Test loss: 0.8900 accuracy: 0.7066
 ```
 
 The accuracy rate is 0.7066 for testing data means there are 7066 right classification based on 10,000 sample of testing data
+
+### Visualize the output:
+
+```python
+predictions = model_new.predict(X_test)
+ypreds = np.argmax(predictions, axis=1)
+
+plt.figure(figsize=(10,10))
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(X_test[i])
+    plt.xlabel(class_names[ypreds[i]])
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/43855029/134071616-41345106-b0fc-4b25-aabe-f5b86e54d5d0.png)
