@@ -131,6 +131,13 @@ for i in range(49):
 plt.show()
 ```
 
+Using One Hot Encoding from Keras to convert the label:
+
+```python
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+```
+
 ![image](https://user-images.githubusercontent.com/43855029/134049444-f95cd292-9b5f-40f9-852c-6bbe0a724d78.png)
 
 
