@@ -247,7 +247,7 @@ Test loss: 0.8900 accuracy: 0.7066
 
 The accuracy rate is 0.7066 for testing data means there are 7066 right classification based on 10,000 sample of testing data
 
-### Visualize the output:
+### Visualize the output with the first 25 testing images
 
 ```python
 predictions = model_new.predict(X_test)
@@ -264,4 +264,4 @@ for i in range(25):
 plt.show()
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/134071616-41345106-b0fc-4b25-aabe-f5b86e54d5d0.png)
+![image](https://user-images.githubusercontent.com/43855029/134072923-04d3b341-b208-4808-b3ec-ad9a5f5a49ec.png)
