@@ -53,7 +53,7 @@ Deep Neural Network (multiple hidden layers)
 Typical activation functions in Neural Network:
 - Step Function (Binary Function)
 - Linear Function
-- Sigmoid Function*
+- Sigmoid Function* & Softmax*
 - Hyperbolic Tangent Function (Tanh)*
 - Rectified Linear Unit Function (ReLU)*
 
@@ -66,8 +66,15 @@ Typical activation functions in Neural Network:
 - One of the widely used activation function in the hidden layer of NN
 - However, it is flat with abs(z)>3, therefore it might lead to "vanishing gradient" in Backpropagation approach, that slowdown the optimization of NN in Deep Neural Network.
 - Sigmoid function converts the output to range (0, 1) so it is not symmetric around the origin. All values are positive.
+- Application in binary classification problems.
 
-(2) Hyperbolic Tangent Function 
+(2) Softmax 
+- The softmax is a more generalised form of the sigmoid. 
+- It is used in multi-class classification problems. 
+- Similar to sigmoid, it produces values in the range of 0–1 therefore it is used as the final layer in classification models.
+- Application in classification with more categories
+
+(3) Hyperbolic Tangent Function 
 
 ![image](https://user-images.githubusercontent.com/43855029/119186714-777ba100-ba46-11eb-8e8f-f82ce0954a91.png)
 
