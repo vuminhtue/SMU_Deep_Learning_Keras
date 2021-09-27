@@ -82,7 +82,38 @@ Typical activation functions in Neural Network:
 - It is nonlinear
 - It does not activate all neuron at the same time: If the input is negative, the neuron is not activated
 - Therefore, it overcomes the "vanishing gradient" problem
- 
 
+### Gradient problem
+[Gradient problem](https://towardsdatascience.com/the-vanishing-exploding-gradient-problem-in-deep-neural-networks-191358470c11)
+When training a deep neural network with gradient based learning and backpropagation, we find the partial derivatives by traversing the network from the the final layer to the initial layer. Using the chain rule, layers that are deeper into the network go through continuous matrix multiplications in order to compute their derivatives.
 
+#### Vanishing gradient
+- In a network of **n** hidden layers, **n** derivatives will be multiplied together. If the derivatives are small then the gradient will decrease exponentially as we propagate through the model until it eventually vanishes
+- The accumulation of small gradients results in a model that is incapable of learning meaningful insights since the weights and biases of the initial layers, which tends to learn the core features from the input data (X), will not be updated effectively. In the worst case scenario the gradient will be 0 which in turn will stop the network and stop further training.
+
+#### Exploding gradient
+- If the derivatives are large then the gradient will increase exponentially as we propagate down the model until they eventually explode, and this is what we call the problem of exploding gradient.
+- The accumulation of large derivatives results in the model being very unstable and incapable of effective learning, The large changes in the models weights creates a very unstable network, which at extreme values the weights become so large that is causes overflow resulting in NaN weight values of which can no longer be updated.
+
+#### Solution:
+[Solution](https://www.analyticsvidhya.com/blog/2021/06/the-challenge-of-vanishing-exploding-gradients-in-deep-neural-networks/)
+
+- Reduce the amount of layer
+- Proper weights for initilization
+
+```python
+keras.layer.Dense(25, activation = "relu", kernel_initializer="he_normal")
+```
+
+- Using Non-saturating Activation Functions like ReLU
+- Batch Normalization
+
+```python
+keras.layers.BatchNormalization(),
+```
+- Gradient Clipping
+
+```python
+optimizer = keras.optimizers.SGD(clipvalue = 1.0)
+```
 
