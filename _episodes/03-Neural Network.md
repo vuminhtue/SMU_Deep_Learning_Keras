@@ -64,7 +64,7 @@ Typical activation functions in Neural Network:
 ![image](https://user-images.githubusercontent.com/43855029/119183889-af80e500-ba42-11eb-923f-8314b3f88734.png)
 
 - One of the widely used activation function in the hidden layer of NN
-- However, it is flat with |z|>3, therefore it might lead to "vanishing gradient" in Backpropagation approach, that slowdown the optimization of NN in Deep Neural Network.
+- However, it is flat with abs(z)>3, therefore it might lead to "vanishing gradient" in Backpropagation approach, that slowdown the optimization of NN in Deep Neural Network.
 - Sigmoid function converts the output to range (0, 1) so it is not symmetric around the origin. All values are positive.
 
 (2) Hyperbolic Tangent Function 
@@ -72,7 +72,7 @@ Typical activation functions in Neural Network:
 ![image](https://user-images.githubusercontent.com/43855029/119186714-777ba100-ba46-11eb-8e8f-f82ce0954a91.png)
 
 - Tanh is quite similar to Sigmoid but it is symmetric around the origin
-- However, it also flat with |z|>3 and also lead to "vanishing gradient" problem in Deep Neural Network
+- However, it also flat with abs(z)>3 and also lead to "vanishing gradient" problem in Deep Neural Network
 
 (3) ReLU Function
 
