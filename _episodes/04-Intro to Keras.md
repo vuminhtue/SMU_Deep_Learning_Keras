@@ -55,7 +55,7 @@ from keras.layers import Dense
 model = Sequential()
 # Create a first hidden layer, the input for the first hidden layer is input layer which has 3 variables:
 model.add(Dense(5, activation='relu', input_shape=(3,)))
-# Create a second hidden layer
+# Create a second hidden layer without specifying input_shape
 model.add(Dense(4, activation='relu'))
 # Create an output layer:
 model.add(Dense(2), activation = 'sigmoid')
