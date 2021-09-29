@@ -108,7 +108,7 @@ model.fit(X_scaled, y, validation_split=0.3, epochs=100, verbose=1)
 Evaluate the testing set using given loss function
 ```python
 results = model.evaluate(X_test_scaled, y_test, verbose=1)
-print("test loss, test acc:", results)
+print("test loss:", results)
 ```
 
 ### Predict output
