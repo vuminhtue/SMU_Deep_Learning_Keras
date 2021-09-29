@@ -27,7 +27,7 @@ keypoints:
 - A simple image can be simply flatten into 1D vector and driven through the regular fully connected NN. However, this requires lot of computational power if the image is large and has more color.
 - Therefore, Convolution Layers and  Max Pooling
 
-### Convolutional Neural Network (CNN or ConvNet)
+### Convolutional Layer (CNN or ConvNet)
 
 - Take a look at the simple gray scale image below which contains 10 pixels on width & height. The color scale has only 2 values (black & white) or (binary -1 and 1), there fore the size of the following image is 10x10x1:
 
@@ -42,7 +42,7 @@ keypoints:
 
 ![image](https://user-images.githubusercontent.com/43855029/129624312-db0f2ce1-4767-4a18-9a02-f5cee4c6cfe5.png)
 
-- So for 3 channel RGB colors, the image size have been reduced:
+- So for 3 channel [RGB](https://www.rapidtables.com/web/color/RGB_Color.html) colors, the image size have been reduced:
 
 ![image](https://user-images.githubusercontent.com/43855029/129624564-96d6d7e4-6409-4775-ad9d-2bf133fa0396.png)
 
