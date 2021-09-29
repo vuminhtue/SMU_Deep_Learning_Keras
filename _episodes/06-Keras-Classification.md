@@ -28,8 +28,8 @@ y = iris.target
 ```
 
 ### Apply One Hot Encoding to categorize the output:
-One Hot Encoding allows to represent the categorical data in a probabilistic way that is understandable by the machine.
-For example **cat, dog, deer** can be converted to **0, 1, 2** or **[1 0 0,0 1 0,0 0 1]**
+- One Hot Encoding allows to represent the categorical data in a probabilistic way that is understandable by the machine.
+- For example **cat, dog, deer** can be converted to **0, 1, 2** or **[1 0 0,0 1 0,0 0 1]**
 
 ```python
 from sklearn.preprocessing import OneHotEncoder
