@@ -33,7 +33,7 @@ keypoints:
 
 ![image](https://user-images.githubusercontent.com/43855029/129790068-408bbad8-8752-4153-9ce3-9099cae1995a.png)
 
-- However, regular image contains colors RGB with each color scale ranges from 0-255, making the size of each image is: n x n x 3 (n = number of pixel).
+- However, regular image contains colors [RGB](https://www.rapidtables.com/web/color/RGB_Color.html) with each color scale ranges from 0-255, making the size of each image is: n x n x 3 (n = number of pixel).
 
 ![image](https://user-images.githubusercontent.com/43855029/129623983-173558ba-45f5-4a42-972d-a6252f7695e0.png)
 
@@ -42,7 +42,7 @@ keypoints:
 
 ![image](https://user-images.githubusercontent.com/43855029/129624312-db0f2ce1-4767-4a18-9a02-f5cee4c6cfe5.png)
 
-- So for 3 channel [RGB](https://www.rapidtables.com/web/color/RGB_Color.html) colors, the image size have been reduced:
+- So for 3 channel RGB colors, the image size have been reduced:
 
 ![image](https://user-images.githubusercontent.com/43855029/129624564-96d6d7e4-6409-4775-ad9d-2bf133fa0396.png)
 
