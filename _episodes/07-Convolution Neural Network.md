@@ -80,7 +80,7 @@ More information can be found [here](https://towardsdatascience.com/a-comprehens
 - Each image has 32 x 32 pixels with color range from 0-255
 - It is good database for pattern recognition and image classification task (the entire data is clean and ready for use).
 - The dataset was divided into 50,000 images for training and 10,000 images for testing
-- The 10 classes are **airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck**
+- The 10 [classes](https://keras.io/api/datasets/cifar10/) are **airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck**
 - Sample CIFAR10 data:
 
 ![image](https://user-images.githubusercontent.com/43855029/134049153-99879363-c761-4b1d-b378-78186024bb95.png)[Source](https://www.cs.toronto.edu/~kriz/cifar.html)
@@ -110,6 +110,10 @@ from keras.datasets import cifar10
 
 # Normalized data to range (0, 1):
 X_train, X_test = X_train/255, X_test/255
+X_train.shape
+X_test.shape
+y_train.shape
+y_test.shape
 ```
 
 Sample ploting:
@@ -131,15 +135,17 @@ for i in range(49):
 plt.show()
 ```
 
+![image](https://user-images.githubusercontent.com/43855029/134049444-f95cd292-9b5f-40f9-852c-6bbe0a724d78.png)
+
+
 Using One Hot Encoding from Keras to convert the label:
 
 ```python
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
+y_train.shape
+y_test.shape
 ```
-
-![image](https://user-images.githubusercontent.com/43855029/134049444-f95cd292-9b5f-40f9-852c-6bbe0a724d78.png)
-
 
 ### Construct Convolutional Neural Network
 - For Convolution front end, starting with kernel size (3,3) with a number of filter 10 followed by Max Pooling Layer with pool_size = (2,2).
@@ -149,9 +155,6 @@ y_test = to_categorical(y_test)
 model = Sequential()
 model.add(Conv2D(10, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D((2, 2)))
-model.add(Conv2D(64, (3, 3), activation='relu'))
 
 model.add(Flatten())
 model.add(Dense(100, activation='relu'))
@@ -174,25 +177,25 @@ model_CNN = model.fit(X_train, y_train, epochs=10,
 
 ```
 Epoch 1/10
-1563/1563 [==============================] - 8s 5ms/step - loss: 1.5480 - accuracy: 0.4378 - val_loss: 1.2536 - val_accuracy: 0.5535
+1563/1563 [==============================] - 7s 4ms/step - loss: 1.5531 - accuracy: 0.4444 - val_loss: 1.3197 - val_accuracy: 0.5285
 Epoch 2/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 1.1785 - accuracy: 0.5824 - val_loss: 1.0813 - val_accuracy: 0.6182
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.2657 - accuracy: 0.5534 - val_loss: 1.2416 - val_accuracy: 0.5575
 Epoch 3/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 1.0222 - accuracy: 0.6380 - val_loss: 0.9720 - val_accuracy: 0.6594
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.1759 - accuracy: 0.5868 - val_loss: 1.2053 - val_accuracy: 0.5776
 Epoch 4/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.9332 - accuracy: 0.6724 - val_loss: 0.9235 - val_accuracy: 0.6763
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.1125 - accuracy: 0.6091 - val_loss: 1.2001 - val_accuracy: 0.5796
 Epoch 5/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.8654 - accuracy: 0.6980 - val_loss: 0.9317 - val_accuracy: 0.6739
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.0671 - accuracy: 0.6244 - val_loss: 1.1442 - val_accuracy: 0.5966
 Epoch 6/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.8059 - accuracy: 0.7185 - val_loss: 0.8877 - val_accuracy: 0.6913
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.0343 - accuracy: 0.6374 - val_loss: 1.1755 - val_accuracy: 0.5926
 Epoch 7/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.7568 - accuracy: 0.7351 - val_loss: 0.9059 - val_accuracy: 0.6940
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.0012 - accuracy: 0.6477 - val_loss: 1.1348 - val_accuracy: 0.6029
 Epoch 8/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.7129 - accuracy: 0.7500 - val_loss: 0.8622 - val_accuracy: 0.7117
+1563/1563 [==============================] - 6s 4ms/step - loss: 0.9710 - accuracy: 0.6615 - val_loss: 1.1379 - val_accuracy: 0.6060
 Epoch 9/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.6730 - accuracy: 0.7640 - val_loss: 0.8632 - val_accuracy: 0.7083
+1563/1563 [==============================] - 6s 4ms/step - loss: 0.9397 - accuracy: 0.6699 - val_loss: 1.1469 - val_accuracy: 0.5988
 Epoch 10/10
-1563/1563 [==============================] - 7s 5ms/step - loss: 0.6345 - accuracy: 0.7790 - val_loss: 0.8900 - val_accuracy: 0.7066
+1563/1563 [==============================] - 6s 4ms/step - loss: 0.9208 - accuracy: 0.6772 - val_loss: 1.1538 - val_accuracy: 0.6080
 ```
 
 ### Evaluate the output
@@ -219,7 +222,7 @@ plt.tight_layout()
 fig
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/134068849-92926fde-2d11-4da9-af7a-0a0fa6823657.png)
+![image](https://user-images.githubusercontent.com/43855029/135329289-3e48cf23-ab0c-4a35-8074-b0a344e8dbbe.png)
 
 
 ### Save & reload CNN model
@@ -241,11 +244,11 @@ print('Test loss: %.4f accuracy: %.4f' % (test_loss, test_accuracy))
 ```
 
 ```
-313/313 [==============================] - 1s 2ms/step - loss: 0.8900 - accuracy: 0.7066
-Test loss: 0.8900 accuracy: 0.7066
+157/157 [==============================] - 0s 2ms/step - loss: 1.1538 - accuracy: 0.6080
+Test loss: 1.1538 accuracy: 0.6080
 ```
 
-The accuracy rate is 0.7066 for testing data means there are 7066 right classification based on 10,000 sample of testing data
+The accuracy rate is 0.6080 for testing data means there are 6080 right classification based on 10,000 sample of testing data
 
 ### Visualize the output with the first 25 testing images
 
@@ -264,4 +267,24 @@ for i in range(25):
 plt.show()
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/134072923-04d3b341-b208-4808-b3ec-ad9a5f5a49ec.png)
+![image](https://user-images.githubusercontent.com/43855029/135329702-29eeb261-e7bb-4d93-bd6c-894e8360df16.png)
+
+### Improving the performance?
+Use more convolution and max pooling payer:
+
+```python
+model = Sequential()
+model.add(Conv2D(10, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D((2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+
+model.add(Flatten())
+model.add(Dense(100, activation='relu'))
+#Output layer contains 10 different number from 0-9
+model.add(Dense(10, activation='softmax'))
+
+# compile model
+model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])                            
+```
