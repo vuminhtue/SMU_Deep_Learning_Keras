@@ -153,7 +153,7 @@ y_test.shape
 
 ```python
 model = Sequential()
-model.add(Conv2D(10, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
+model.add(Conv2D(8, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 model.add(Flatten())
@@ -274,9 +274,9 @@ Use more convolution and max pooling payer:
 
 ```python
 model = Sequential()
-model.add(Conv2D(10, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
+model.add(Conv2D(8, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPooling2D((2, 2)))
 model.add(Conv2D(64, (3, 3), activation='relu'))
 
