@@ -12,6 +12,13 @@ $ pip install tensorflow==2.3.0
 $ pip install keras==2.4.3
 ```
 
+Check if keras is correctly installed:
+
+```
+import keras
+print(keras.__version__)
+```
+
 ## Install Keras from new conda environment
 We will use Palmetto cluster for this workshop with Jupyter Lab.
 Please follow this guideline to create a new conda environment and install **keras** package.
@@ -48,6 +55,13 @@ $ conda install matplotlib
 
 => Note: while using **my_keras** conda environment, if we are missing anything, we can always come back and update using **pip install**
 or **conda install** method.
+
+Check if keras is correctly installed:
+
+```
+import keras
+print(keras.__version__)
+```
 
 7. Last step: create Jupyter Hub kernel in order to work with Jupyter Notebook
 
