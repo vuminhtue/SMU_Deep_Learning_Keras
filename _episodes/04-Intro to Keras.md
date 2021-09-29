@@ -58,7 +58,7 @@ model.add(Dense(5, activation='relu', input_shape=(3,)))
 # Create a second hidden layer without specifying input_shape
 model.add(Dense(4, activation='relu'))
 # Create an output layer:
-model.add(Dense(2), activation = 'sigmoid')
+model.add(Dense(2,activation='sigmoid'))
 ```
 
 ### How about this model?
