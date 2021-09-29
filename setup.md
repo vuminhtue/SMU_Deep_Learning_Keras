@@ -27,11 +27,13 @@ Please follow this guideline to create a new conda environment and install **ker
 2. Login to Palmetto login node: your_username@login001
 3. Request for a compute node with simple configuration:
 
+
 ```
 $ qsub -I -l select=1:ncpus=8:mem=32gb:interconnect=any,walltime=24:00:00
 ```
 
 4. Load module:
+
 
 ```
 $ module load anaconda3/2020.07-gcc/8.3.1
@@ -39,11 +41,13 @@ $ module load anaconda3/2020.07-gcc/8.3.1
 
 5. Create conda environment:
 
+
 ```
 $ conda create -n my_keras python=3.8
 ```
 
 6. Once done, activate the environment and install numpy, pandas, scikit-learn, matplotlib, seaborn and keras
+
 
 ```
 $ source activate my_keras
@@ -64,6 +68,7 @@ Check if keras is correctly installed:
 ```
 
 7. Last step: create Jupyter Hub kernel in order to work with Jupyter Notebook
+
 
 ```
 $ conda install jupyter
