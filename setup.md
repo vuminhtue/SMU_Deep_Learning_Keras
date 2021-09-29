@@ -59,8 +59,8 @@ or **conda install** method.
 Check if keras is correctly installed:
 
 ```
-import keras
-print(keras.__version__)
+>>> import keras
+>>> print(keras.__version__)
 ```
 
 7. Last step: create Jupyter Hub kernel in order to work with Jupyter Notebook
