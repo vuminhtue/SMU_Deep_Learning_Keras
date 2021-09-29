@@ -4,7 +4,7 @@ title: Setup
 Setup Keras kernel in Palmetto's JupyterLab
 ---
 
-## Install Keras from existing skln conda environment (ML_SKLN kernel)
+### Install Keras from existing skln conda environment (ML_SKLN kernel)
 Open terminal and activate the conda environment or using the consol with ML_SKLN kernel
 
 ```
@@ -19,7 +19,7 @@ Check if keras is correctly installed:
 >>> print(keras.__version__)
 ```
 
-## Install Keras from new conda environment
+### Install Keras from new conda environment
 We will use Palmetto cluster for this workshop with Jupyter Lab.
 Please follow this guideline to create a new conda environment and install **keras** package.
 
