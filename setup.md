@@ -15,8 +15,8 @@ $ pip install keras==2.4.3
 Check if keras is correctly installed:
 
 ```
-import keras
-print(keras.__version__)
+>>> import keras
+>>> print(keras.__version__)
 ```
 
 ## Install Keras from new conda environment
