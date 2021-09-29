@@ -38,7 +38,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 scaler = MinMaxScaler()
 X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+X_test_scaled  = scaler.fit_transform(X_test)
 ```
 
 ### Let's use Keras's Sequential model with Dense layers
