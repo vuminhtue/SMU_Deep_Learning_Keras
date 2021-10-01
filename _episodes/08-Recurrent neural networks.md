@@ -114,6 +114,7 @@ print(df1.isna().sum())
 
 Now treat missing value with KNN Imputer 
 
+
 ```
 #Treat missing values using KNN Imputer method
 from sklearn.impute import KNNImputer
