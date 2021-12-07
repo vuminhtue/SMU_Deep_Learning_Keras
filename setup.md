@@ -5,11 +5,18 @@ Setup Keras kernel in Palmetto's JupyterLab
 ---
 
 ### Install Keras from existing skln conda environment (ML_SKLN kernel)
-Open terminal and activate the conda environment or using the consol with ML_SKLN kernel
+For **Clemson Palmetto**, Open terminal and activate the conda environment or using the consol with ML_SKLN kernel
 
 ```
 $ pip install tensorflow==2.3.0
 $ pip install keras==2.4.3
+```
+
+For **SMU ManeFrame** with only cuda 10.0 support:
+
+```
+$ pip install tensorflow==2.2.0
+$ pip install keras==2.1.5
 ```
 
 Check if keras is correctly installed:
