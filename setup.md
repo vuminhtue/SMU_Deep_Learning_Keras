@@ -1,66 +1,44 @@
 ---
 title: Setup
 ---
-Setup Keras kernel in Palmetto's JupyterLab
+Setup Jupyter kernel in ManeFrame M2's JupyterLab
 ---
 
-### Install Keras from existing skln conda environment (ML_SKLN kernel)
-For **Clemson Palmetto**, Open terminal and activate the conda environment or using the consol with ML_SKLN kernel
+### Install Tensorflow from existing skln conda environment (ML_SKLN kernel) used in previous Machine Learning workshop
+
+Once open Jupyter Lab, open new terminal:
 
 ```
-$ pip install tensorflow==2.3.0
-$ pip install keras==2.4.3
-```
-
-For **SMU ManeFrame** with only cuda 10.0 support:
-
-```
+$ source activate ML_SKLN
 $ pip install tensorflow==2.2.0
-$ pip install keras==2.1.5
 ```
 
 Check if keras is correctly installed:
 
 ```
->>> import keras
+>>> import tensorflow as tf
+>>> from tensorflow import keras
 >>> print(keras.__version__)
 ```
 
 ### Install Keras from new conda environment
-We will use Palmetto cluster for this workshop with Jupyter Lab.
-Please follow this guideline to create a new conda environment and install **keras** package.
+Please follow this guideline to create a new conda environment and install **tensorflow** package.
 
-1. Open terminal (MobaXTerm for Windows OS/Terminal for MacOS & Linux platform)
-2. Login to Palmetto login node: your_username@login001
-3. Request for a compute node with simple configuration:
+Once open Jupyter Lab, open new terminal:
 
-
-```
-$ qsub -I -l select=1:ncpus=8:mem=32gb:interconnect=any,walltime=24:00:00
-```
-
-4. Load module:
-
-
-```
-$ module load anaconda3/2020.07-gcc/8.3.1
-```
-
-5. Create conda environment:
-
+1. Create conda environment:
 
 ```
 $ conda create -n my_keras python=3.8
 ```
 
-6. Once done, activate the environment and install numpy, pandas, scikit-learn, matplotlib, seaborn and keras
+2. Once done, activate the environment and install numpy, pandas, scikit-learn, matplotlib, seaborn and tensorflow
 
 
 ```
 $ source activate my_keras
 $ pip install numpy pandas scikit-learn seaborn
-$ pip install tensorflow==2.3.0
-$ pip install keras==2.4.3
+$ pip install tensorflow==2.2.0
 $ conda install matplotlib 
 ```
 
@@ -70,21 +48,18 @@ or **conda install** method.
 Check if keras is correctly installed:
 
 ```
+>>> import tensorflow as tf
 >>> import keras
 >>> print(keras.__version__)
 ```
 
-7. Last step: create Jupyter Hub kernel in order to work with Jupyter Notebook
-
+3. Last step: create Jupyter Hub kernel in order to work with Jupyter Notebook
 
 ```
 $ conda install jupyter
 $ python -m ipykernel install --user --name my_keras --display-name "DL_Keras"
 ```
+4. Open Jupyter Lab and check if the kernel has been created?
 
-8. Open Jupyter Lab in Palmetto, login and see if you have **DL_Keras** kernel created
-https://www.palmetto.clemson.edu/jhub/hub/home
-
-![image](https://user-images.githubusercontent.com/43855029/117865975-9159fe80-b264-11eb-94e7-bcbf17f1e55c.png)
 {% include links.md %}
 
