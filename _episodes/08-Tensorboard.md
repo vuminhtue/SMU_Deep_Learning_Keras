@@ -94,5 +94,23 @@ p014:6017
 - Once accepting the Duo push, your Moba XTerm screen would look like this:
 ![image](https://user-images.githubusercontent.com/43855029/159353202-ba2fde99-2c13-40cc-9854-1ccf83af9f1b.png)
 
+Leave the Window on and open Firefox:
 
+### Setting up Firefox:
+- Firefox should be enable to view website through the proxy.
+- Once Firefox opened, select "ALT+T+S" to open the setting tab.
+- Scroll all the way down, you  will see Network Settings. Click on Settings ...
+![image](https://user-images.githubusercontent.com/43855029/159353682-0f295c34-2a88-4b0b-8d5a-b89c631bdd92.png)
+- Fill in the following information:
++ Manual proxy configuration
++ SOCKS v5
++ Port 6017
++ Enable checkboxes for Proxy DNS and Enable DNS over HTTPS:
+![image](https://user-images.githubusercontent.com/43855029/159353875-5eca7515-8ba8-4482-85e4-328cd4291f00.png)
 
+- Click OK and open a new Tab in Firefox:
+- Type in the address bar the node name and port number:
+
+```python
+p014:6017
+```
