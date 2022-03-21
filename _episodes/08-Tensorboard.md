@@ -38,11 +38,24 @@ In the previous episode, we already created the log files for CNN training under
 Now, let's load up the log files in the same directory:
 
 ```python
-# First, change directory to where you have the log_CNN saved:
+# First activate the working conda environment:
+source activate ML_SKLN
+
+# Second, change directory to where you have the log_CNN saved:
 cd Workshop/SMU_DL
 
 # Run the tensorboard with log data in the logs_CNN directory
-tensorboard --logdir logs_CNN
+tensorboard --logdir logs_CNN --host 0.0.0.0
 ```
+
+The following information appears:
+
+```python
+2022-03-21 14:41:55.277397: W tensorflow/stream_executor/platform/default/dso_loader.cc:59] Could not load dynamic library 'libcudart.so.10.1'; dlerror: libcudart.so.10.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/users/tuev/Applications/lib:/users/tuev/Applications/lib
+2022-03-21 14:41:55.277464: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/users/tuev/.conda/envs/ML_SKLN/lib/python3.6/site-packages/tensorboard_data_server/bin/server: /lib64/libc.so.6: version `GLIBC_2.18' not found (required by /users/tuev/.conda/envs/ML_SKLN/lib/python3.6/site-packages/tensorboard_data_server/bin/server)
+TensorBoard 2.8.0 at http://0.0.0.0:6017/ (Press CTRL+C to quit)
+```
+
 
 
