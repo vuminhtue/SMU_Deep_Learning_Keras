@@ -13,7 +13,7 @@ keypoints:
 
 - TensorBoard is a visualization web app to get a better understanding of various parameters of the neural network model and its training metrics.
 - Such visualizations are quite useful when you are doing experiments with neural network models and want to keep a close watch on the related metrics. 
-- It is open-source and is a part of the Tensorflow group.
+- It is open-source and is a part of the Tensorflow version 2+
 
 ## Some of the useful things you can do with TensorBoard includes:
 
@@ -65,6 +65,17 @@ p014:6017
 ```
 
 ### Setting up Socket Proxy
+
+#### For Macs OS/Linux
+
+- Setup the SSH tunnel with port forwarding to M2.
+- Open a terminal and run the following command with corresponding port number (6017 in this case)(this terminal must be kept opened for the socket proxy to be active):
+
+```bash
+$ ssh -D 6017 -C -q -N USERNAME@m2.smu.edu
+```
+
+- User need to authenticate themselve with password and DUO
 
 #### For Window OS
 
