@@ -51,11 +51,42 @@ tensorboard --logdir logs_CNN --host 0.0.0.0
 The following information appears:
 
 ```python
+(ML_SKLN) [tuev@p014 SMU_DL]$ tensorboard --logdir logs_CNN --host 0.0.0.0
 2022-03-21 14:41:55.277397: W tensorflow/stream_executor/platform/default/dso_loader.cc:59] Could not load dynamic library 'libcudart.so.10.1'; dlerror: libcudart.so.10.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/users/tuev/Applications/lib:/users/tuev/Applications/lib
 2022-03-21 14:41:55.277464: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
 /users/tuev/.conda/envs/ML_SKLN/lib/python3.6/site-packages/tensorboard_data_server/bin/server: /lib64/libc.so.6: version `GLIBC_2.18' not found (required by /users/tuev/.conda/envs/ML_SKLN/lib/python3.6/site-packages/tensorboard_data_server/bin/server)
 TensorBoard 2.8.0 at http://0.0.0.0:6017/ (Press CTRL+C to quit)
 ```
+
+From the above information, let's remember the node number (p014) and the port number (6017) and these numbers are different for different users.
+
+```python
+p014:6017
+```
+
+### Setting up Socket Proxy
+
+#### For Window OS
+
+- Install Moba XTerm (https://mobaxterm.mobatek.net)
+- Open Moba XTerm and login M2:
+- Click on Tunneling
+
+![image](https://user-images.githubusercontent.com/43855029/159352196-45fc777e-bcc7-4e13-9679-65d2baf9d355.png)
+ and select New SSH Tunnel:
+ 
+ ![image](https://user-images.githubusercontent.com/43855029/159352273-0c670730-58de-4e9c-bb99-81e063857c8e.png)
+
+- From the openning windows, select the following option:
+    + Dynamic port forwarding (SOCKS proxy)
+    + Forward port 6017
+    + SSH Server: m2.smu.edu
+    + Username: your own username
+    + SSH Port 22
+
+![image](https://user-images.githubusercontent.com/43855029/159352517-82bd36c2-b679-446c-8d30-7eecd4b28dbc.png)
+ 
+
 
 
 
