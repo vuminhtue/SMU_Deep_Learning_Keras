@@ -106,7 +106,7 @@ Leave the Window on and open Firefox:
 + SOCKS v5
 + Port 6017
 + Enable checkboxes for Proxy DNS and Enable DNS over HTTPS:
-![image](https://user-images.githubusercontent.com/43855029/159353875-5eca7515-8ba8-4482-85e4-328cd4291f00.png)
+![image](https://user-images.githubusercontent.com/43855029/159354645-5ef3f328-d351-42f2-939a-4822d544babc.png)
 
 - Click OK and open a new Tab in Firefox:
 - Type in the address bar the node name and port number:
