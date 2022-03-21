@@ -114,3 +114,7 @@ Leave the Window on and open Firefox:
 ```python
 p014:6017
 ```
+
+The Tensorboard window appears:
+
+![image](https://user-images.githubusercontent.com/43855029/159354281-a9fd7371-f14c-4c72-91ec-9daf4e4ac4dd.png)
