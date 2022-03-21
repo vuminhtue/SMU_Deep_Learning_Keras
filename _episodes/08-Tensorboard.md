@@ -86,7 +86,13 @@ p014:6017
 
 ![image](https://user-images.githubusercontent.com/43855029/159352517-82bd36c2-b679-446c-8d30-7eecd4b28dbc.png)
  
+- Press Save and the following window appears:
 
+![image](https://user-images.githubusercontent.com/43855029/159352914-34075591-ba97-4c00-8dbe-e92e4c170348.png)
+
+- Select the play button to start the service, The MobaXTerm will ask for your credential (including Duo) 
+- Once accepting the Duo push, your Moba XTerm screen would look like this:
+![image](https://user-images.githubusercontent.com/43855029/159353202-ba2fde99-2c13-40cc-9854-1ccf83af9f1b.png)
 
 
 
