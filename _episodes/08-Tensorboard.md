@@ -34,11 +34,15 @@ pip install tensorboard
 
 ### Starting Tensorboard
 
-In the previous episode, we already created the log files for CNN training under the same working folder (log_CNN).
+In the previous episode, we already created the log files for CNN training under the same working folder (logs_CNN).
 Now, let's load up the log files in the same directory:
 
 ```python
-tensorboard --logdir logs
+# First, change directory to where you have the log_CNN saved:
+cd Workshop/SMU_DL
+
+# Run the tensorboard with log data in the logs_CNN directory
+tensorboard --logdir logs_CNN
 ```
 
 
