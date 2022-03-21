@@ -38,7 +38,7 @@ $ conda create -n my_keras python=3.8
 ```
 $ source activate my_keras
 $ pip install numpy pandas scikit-learn seaborn
-$ pip install tensorflow==2.2.0
+$ pip install tensorflow==2.3.0 tensorboard
 $ conda install matplotlib 
 ```
 
@@ -49,7 +49,7 @@ Check if keras is correctly installed:
 
 ```
 >>> import tensorflow as tf
->>> import keras
+>>> from tensorflow import keras
 >>> print(keras.__version__)
 ```
 
