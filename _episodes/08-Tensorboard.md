@@ -109,9 +109,13 @@ Leave the Window on and open Firefox:
 
 ### Setting up Firefox:
 - Firefox should be enable to view website through the proxy.
-- Once Firefox opened, select "ALT+T+S" to open the setting tab.
+- Once Firefox opened:
+  + Windows: select "ALT+T+S" to open the setting tab.
+  + Macs OS: Preferences\General
+  
 - Scroll all the way down, you  will see Network Settings. Click on Settings ...
 ![image](https://user-images.githubusercontent.com/43855029/159353682-0f295c34-2a88-4b0b-8d5a-b89c631bdd92.png)
+
 - Fill in the following information:
 + Manual proxy configuration
 + SOCKS v5
