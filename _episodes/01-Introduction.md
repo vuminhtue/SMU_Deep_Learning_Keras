@@ -34,7 +34,7 @@ keypoints:
 ## Deep Learning Models
 In this workshop we focus on several typical Deep Learning models:
 
-(1) Regular Deep Neural Network
+(1) Dense Deep Neural Network
 
 (2) Convolutional Neural Network (CNN)
 
