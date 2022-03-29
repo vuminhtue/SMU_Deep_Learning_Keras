@@ -10,7 +10,7 @@ Once open Jupyter Lab, open new terminal:
 
 ```
 $ source activate ML_SKLN
-$ pip install tensorflow==2.8.0
+$ pip install tensorflow==2.8.0 tensorboard
 ```
 
 Check if keras is correctly installed:
@@ -38,7 +38,7 @@ $ conda create -n my_keras python=3.8
 ```
 $ source activate my_keras
 $ pip install numpy pandas scikit-learn seaborn
-$ pip install tensorflow==2.3.0 tensorboard
+$ pip install tensorflow==2.8.0 tensorboard
 $ conda install matplotlib 
 ```
 
