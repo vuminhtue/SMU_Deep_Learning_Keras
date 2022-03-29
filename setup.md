@@ -10,7 +10,7 @@ Once open Jupyter Lab, open new terminal:
 
 ```
 $ source activate ML_SKLN
-$ pip install tensorflow==2.3.0
+$ pip install tensorflow==2.8.0
 ```
 
 Check if keras is correctly installed:
