@@ -1,5 +1,5 @@
 ---
-title: "Recurrent Neural Network for Timeseries forecasting"
+title: "Recurrent Neural Network for Weather forecasting"
 teaching: 20
 exercises: 0
 questions:
