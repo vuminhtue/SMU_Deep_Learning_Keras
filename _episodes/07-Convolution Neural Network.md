@@ -73,7 +73,7 @@ In which Max Pooling performs a lot better than Average Pooling.
 More information can be found [here](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)
 
 
-## Application of CNN in image classification
+# Application of CNN in image classification
 
 ### The CIFAR10 database
 - The [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) database consisting 60,000 color images with 10 different classes
@@ -288,3 +288,105 @@ model.add(Dense(10, activation='softmax'))
 # compile model
 model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])                            
 ```
+
+# Using pre-trained model VGG16
+
+- A widely used CNN architecture for ImageNet challange (top 5) 2014, developed at Visual Geometry Group (VGG) using 16 layers.
+- It surpassed AlexNet by replacing large kernel-sized filters with multipled 3x3 kernel-sized filters one after another
+- Until now, It is still one of the best vision architecture to date.
+
+![image](https://user-images.githubusercontent.com/43855029/162279133-27b22ade-7aa7-4d3d-a4ef-1c8e36648015.png)
+
+The architecture of VGG16:
+
+![image](https://user-images.githubusercontent.com/43855029/162279702-f7694360-8db0-4df0-8932-2a43a6e7bce8.png)
+
+In this workshop, we gonna use VGG16 to recognize some images downloaded from internet.
+
+## Load VGG16
+
+```python
+from tensorflow.keras.applications import VGG16
+ 
+# load the VGG16 network *pre-trained* on the ImageNet dataset
+model = VGG16(weights="imagenet")
+model.summary()
+```
+
+## Download some images:
+
+Function to show images:
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+def show_image(image_path):
+    image = mpimg.imread(image_path)
+    print(image.shape)
+    plt.imshow(image)
+```
+
+Download an image:
+
+```python
+!wget https://cdn.britannica.com/29/150929-050-547070A1/lion-Kenya-Masai-Mara-National-Reserve.jpg
+```
+
+Show image:
+
+```python
+show_image("lion-Kenya-Masai-Mara-National-Reserve.jpg")
+```
+
+## Processing input images to VGG16 input
+
+```python
+from tensorflow.keras.preprocessing import image as image_utils
+from tensorflow.keras.applications.vgg16 import preprocess_input
+
+def load_and_process_image(image_path):
+    # Print image's original shape, for reference
+    print('Original image shape: ', mpimg.imread(image_path).shape)
+    
+    # Load in the image with a target size of 224, 224
+    image = image_utils.load_img(image_path, target_size=(224, 224))
+    # Convert the image from a PIL format to a numpy array
+    image = image_utils.img_to_array(image)
+    # Add a dimension for number of images, in our case 1
+    image = image.reshape(1,224,224,3)
+    # Preprocess image to align with original ImageNet dataset
+    image = preprocess_input(image)
+    # Print image's shape after processing
+    print('Processed image shape: ', image.shape)
+    return image
+```
+
+## Prediction using VGG16
+
+Now that we have our image in the right format, we can pass it into our model and get a prediction. We are expecting an output of an array of 1000 elements, which is going to be difficult to read. Fortunately, models loaded directly with Keras have yet another helpful method that will translate that prediction array into a more readable form.
+
+Fill in the following function to implement the prediction:
+
+```python
+from tensorflow.keras.applications.vgg16 import decode_predictions
+
+def readable_prediction(image_path):
+    # Show image
+    show_image(image_path)
+    # Load and pre-process image
+    image = load_and_process_image(image_path)
+    # Make predictions
+    predictions = model.predict(image)
+    # Print predictions in readable form
+    print('Predicted:', decode_predictions(predictions, top=3))
+```
+
+Predict the image:
+
+```python
+readable_prediction("lion-Kenya-Masai-Mara-National-Reserve.jpg")
+```
+
+
+
