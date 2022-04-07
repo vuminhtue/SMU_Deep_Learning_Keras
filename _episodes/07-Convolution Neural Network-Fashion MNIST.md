@@ -1,5 +1,5 @@
 ---
-title: "Convolution Neural Network for image classification"
+title: "Convolution Neural Network for image classification: Fashion MNIST"
 teaching: 20
 exercises: 0
 questions:
