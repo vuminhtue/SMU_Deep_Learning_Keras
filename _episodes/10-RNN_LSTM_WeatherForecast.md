@@ -1,4 +1,3 @@
-
 ---
 title: "Recurrent Neural Network for Timeseries forecasting"
 teaching: 20
