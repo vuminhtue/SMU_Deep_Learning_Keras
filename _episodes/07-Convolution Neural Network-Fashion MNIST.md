@@ -326,3 +326,22 @@ plot_acc_loss(history)
 
 
 Which one is better? ALexNet using tanh or the previous using ReLU activation function?
+
+### Visulize the output with images and its labels:
+
+```python
+predictions = model_new.predict(X_test)
+ypreds = np.argmax(predictions, axis=1)
+
+plt.figure(figsize=(10,10))
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(X_test[i])
+    plt.title(class_names[ypreds[i]])
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/43855029/162297902-6709919f-78a6-4787-846b-6bfa2399e5e0.png)
