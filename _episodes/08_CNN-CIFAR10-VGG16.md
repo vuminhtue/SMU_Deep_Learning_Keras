@@ -1,5 +1,5 @@
 ---
-title: "Convolution Neural Network for image classification:CIFAR10"
+title: "Convolution Neural Network for image classification: CIFAR10"
 teaching: 20
 exercises: 0
 questions:
@@ -276,6 +276,9 @@ Show image:
 show_image("lion-Kenya-Masai-Mara-National-Reserve.jpg")
 ```
 
+![image](https://user-images.githubusercontent.com/43855029/162304581-dfc34da1-74e8-4bb7-a95b-9750c22a1da5.png)
+
+
 ## Processing input images to VGG16 input
 
 ```python
@@ -325,5 +328,6 @@ Predict the image:
 readable_prediction("lion-Kenya-Masai-Mara-National-Reserve.jpg")
 ```
 
+![image](https://user-images.githubusercontent.com/43855029/162304749-49c9fae2-516e-405e-aadd-026e0eb01986.png)
 
 
