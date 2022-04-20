@@ -7,7 +7,7 @@
 
 This repository contains the code to generate the course <br>
 website for the workshop on `Deep Learning with Keras` <br>
-for the **Southern Methodist University** .
+for the **[Southern Methodist University]** .
 
 *The website is based on the **[Carpentries]** template.*
 
@@ -29,6 +29,7 @@ Gerald J. Ford Hall 119
 
 [License]: LICENSE
 
+[Southern Methodist University]: https://www.smu.edu/
 [Carpentries]: https://carpentries.org/
 [Tue Vu]: https://github.com/vuminhtue
 [Keras]: https://github.com/keras-team/keras
