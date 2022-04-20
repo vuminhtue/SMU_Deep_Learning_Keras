@@ -1,5 +1,5 @@
 
-# Keras Deep Learning
+# Keras Deep Learning [![Badge Maintainer]][Tue Vu] [![Badge License]][License]
 
 *Deep Learning in Python using the Keras Library*
 
@@ -12,10 +12,6 @@ for the **Southern Methodist University** .
 *The website is pased on the **[Carpentries]** template.*
 
 
-## Maintainer(s)
-
-* Tue Vu
-
 ## Authors
 ```
 Tue Vu, PhD
@@ -26,4 +22,10 @@ Gerald J. Ford Hall 119
 
 <!----------------------------------------------------------------------------->
 
+[Badge Maintainer]: https://img.shields.io/badge/Maintainer-Tue_Vu-9fbbc7?style=for-the-badge
+[Badge License]: https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge
+
+[License]: LICENSE
+
 [Carpentries]: https://carpentries.org/
+[Tue Vu]: https://github.com/vuminhtue
