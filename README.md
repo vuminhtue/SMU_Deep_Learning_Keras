@@ -1,8 +1,16 @@
-# Deep Learing using Python with Keras Library
-This repository prepares the workshop for Southern Methodist University student on Deep Learning with Keras.
 
-This repository generates the corresponding course website based on the original templates
-from [The Carpentries].
+# Keras Deep Learning
+
+*Deep Learning in Python using the Keras Library*
+
+<br>
+
+This repository contains the code to generate the course <br>
+website for the workshop on `Deep Learning with Keras` <br>
+for the **Southern Methodist University** .
+
+*The website is pased on the **[Carpentries]** template.*
+
 
 ## Maintainer(s)
 
@@ -18,4 +26,4 @@ Gerald J. Ford Hall 119
 
 <!----------------------------------------------------------------------------->
 
-[The Carpentries]: https://carpentries.org/
+[Carpentries]: https://carpentries.org/
