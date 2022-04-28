@@ -1,17 +1,35 @@
-# Deep Learing using Python with Keras Library
-This repository prepares the workshop for Southern Methodist University student on Deep Learning with Keras.
 
-This repository generates the corresponding course website based on the original templates
-from [The Carpentries](https://carpentries.org/).
+# Keras Deep Learning [![Badge Maintainer]][Tue Vu] [![Badge License]][License]
 
-## Maintainer(s)
+*Deep Learning in Python using the **[Keras]** Library*
 
-* Tue Vu
+<br>
 
-## Authors
+This repository contains the code to generate the course <br>
+website for the workshop on `Deep Learning with Keras` <br>
+for the **[Southern Methodist University]** .
+
+*The website is based on the **[Carpentries]** template.*
+
+<br>
+
+## Author
+
 ```
 Tue Vu, PhD
 AI & ML Research Scientist
 tuev@smu.edu
 Gerald J. Ford Hall 119
 ```
+
+<!----------------------------------------------------------------------------->
+
+[Badge Maintainer]: https://img.shields.io/badge/Maintainer-Tue_Vu-9fbbc7?style=for-the-badge
+[Badge License]: https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge
+
+[License]: LICENSE
+
+[Southern Methodist University]: https://www.smu.edu/
+[Carpentries]: https://carpentries.org/
+[Tue Vu]: https://github.com/vuminhtue
+[Keras]: https://github.com/keras-team/keras
