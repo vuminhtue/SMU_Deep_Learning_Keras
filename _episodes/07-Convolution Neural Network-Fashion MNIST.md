@@ -17,27 +17,50 @@ keypoints:
 - Using Forward & Backpropagation technique with certain property to process it faster
 - CNNs best for object detection, image classification, computer vision
 
-## Architecture of CNNs
+![image](https://user-images.githubusercontent.com/43855029/165555812-c94fa369-193f-42e7-ba4b-b4e9a5fd7f67.png)
 
+## Architecture of CNNs
 
 ![image](https://user-images.githubusercontent.com/43855029/129789560-452539b8-06c7-4a3b-8543-c2f6e5a6f9c6.png)
 [Source](http://henrysprojects.net/projects/conv-net.html)
 
-- A basic CNNs consists of Convolution Layers, Max Pooling Layers and fully connected Layer (Dense) before output layer
+- A basic CNNs typically consists of Convolution Layers, Max Pooling Layers and fully connected Layer (Dense) before output layer
 - A simple image can be simply flatten into 1D vector and driven through the regular fully connected NN. However, this requires lot of computational power if the image is large and has more color.
-- Therefore, Convolution Layers and  Max Pooling
+- Therefore, Convolution Layers and  Max Pooling help to reduce the size of the images but preserve the quality/structure of input images
 
 ### Convolutional Layer (CNN or ConvNet)
 
-- Take a look at the simple gray scale image below which contains 10 pixels on width & height. The color scale has only 2 values (black & white) or (binary -1 and 1), there fore the size of the following image is 10x10x1:
+#### Hyperparameter: Depth (L)
+
+- Take a look at the simple gray scale image below which contains 10 pixels on width & height. The color scale has only 2 values (black & white) or (binary -1 and 1), there fore the size of the following image is 10x10x1 (L=1):
 
 ![image](https://user-images.githubusercontent.com/43855029/129790068-408bbad8-8752-4153-9ce3-9099cae1995a.png)
 
-- However, regular image contains colors [RGB](https://www.rapidtables.com/web/color/RGB_Color.html) with each color scale ranges from 0-255, making the size of each image is: n x n x 3 (n = number of pixel).
+- However, regular image contains colors [RGB](https://www.rapidtables.com/web/color/RGB_Color.html) with each color scale ranges from 0-255, making the size of each image is: n x n x 3 (n = number of pixel). (L=3)
 
 ![image](https://user-images.githubusercontent.com/43855029/129623983-173558ba-45f5-4a42-972d-a6252f7695e0.png)
 
-- CNN uses the Convolved Feature to reduce the image size by dot product with given kernel.
+#### Hyperparameter: Kernel (K) and Filter 
+
+- The dot product between 2 matrices can be represented:
+
+![image](https://user-images.githubusercontent.com/43855029/165556669-78f8f758-4ec4-4eb3-862f-780f5dfd8bcb.png)
+
+- There are different Filters that can be applied:
+  + Blur filter:
+  
+    ![image](https://user-images.githubusercontent.com/43855029/165556799-86bf38c1-897e-4ba5-8824-4a8b7e718c0c.png)
+    
+  + Sharp filter:
+   
+   ![image](https://user-images.githubusercontent.com/43855029/165556884-f1ac8ac9-3145-435f-8e38-09a0799cf695.png)
+
+  + Edge dectetion filter:
+    
+    ![image](https://user-images.githubusercontent.com/43855029/165556949-783dff9e-45a9-42a4-a1f2-9a8997a03c12.png)
+
+- CNN uses the Convolved Feature to reduce the image size by dot product with given kernel K.
+
 - The image reduction without losing features and easier to process for good prediction
 
 ![image](https://user-images.githubusercontent.com/43855029/129624312-db0f2ce1-4767-4a18-9a02-f5cee4c6cfe5.png)
@@ -50,8 +73,22 @@ keypoints:
 
 ![image](https://user-images.githubusercontent.com/43855029/129791297-fae899e5-1745-4fa0-b348-1785dea769ea.png)
 
+#### Hyperparameter: Stride (S):
+
+Stride tuned for the compression of images and video data
+
+  ![image](https://user-images.githubusercontent.com/43855029/165557343-70ee33bb-5820-4ca5-bb05-18ef6d7acaa9.png)
+
+#### Hyperparameter: Padding (P):
+
+- The pixels located on the corners and the edges are used much less than those in the middle => the information on borders and edges are note preserved
+- Padding which add 0 around images to avoid lossing edge information
+
+![image](https://user-images.githubusercontent.com/43855029/165557541-b4eaf3ed-d2f3-4eb1-aa02-a1857bf184e8.png)
+
 
 ### Pooling Layer
+
 - Similar to the Convolutional Layer, the Pooling layer is responsible for reducing the spatial size of the Convolved Feature.
 - This is to decrease the computational power required to process the data through dimensionality reduction
 - Two types of Pooling: Max Pooling & Average Pooling.
@@ -70,8 +107,95 @@ In which Max Pooling performs a lot better than Average Pooling.
 - The image is then flatten to a column vector and passed through feed-forward NN and BackPropagation applied to every iteration.
 - Softmax activation function is applied to classified the multi-output
 
+### Batch Normalization Layer
+
+- A process to make Deep neural networks faster and more stable through adding extra layers in a deep neural network.
+- The new layer performs the standardizing and normalizing operations on the input of a layer coming from a previous layer.
+- Normalize the amounts of weights trained between layers during training
+- It usually goes after Conv2D layers or after Dense layer 
+
+for example:
+
+```python
+model.add(Conv2D(75, (3, 3), strides=1, activation="relu", input_shape=(28, 28, 1)))
+model.add(BatchNormalization())
+model.add(MaxPool2D((2, 2), strides=2))
+```
+
+### Dropout Layer
+
+- Dropout is a regularization method that approximates training a large number of neural networks with different architectures in parallel.
+- Dropout helps to avoid Overfitting
+- Dropout is implemented per layer in the NN
+- Dropout is not used after training when making a prediction with the fit network.
+
+for example, randomly shutoff 20% neuron:
+
+```python
+model.add(Conv2D(75, (3, 3), strides=1, activation="relu", input_shape=(28, 28, 1)))
+model.add(Dropout(0.2))
+```
+
 More information can be found [here](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)
 
+## A sample of CNN model
+
+![image](https://user-images.githubusercontent.com/43855029/165558822-d1024101-c76c-43bb-bf95-d381ba55bff9.png)
+
+### Letnet-5 (1998) by Yann LeCun
+
+- LeNet-5 is designed for handwritten and machine-printed character recognition
+- Input image size is 32x32 pixels and having 1 channel color
+- Total parameters: 60k
+- Activation function: tanh
+
+![image](https://user-images.githubusercontent.com/43855029/165558955-fc1e5a29-961a-41ee-bbb7-c4dd859350b5.png)
+
+- It can be represented as:
+
+```python
+model = Sequential()
+model.add(Conv2D(6, (5, 5), strides=(1, 1), activation=‘tanh’, padding=“valid”, input_shape=(32, 32, 1)))
+model.add(BatchNormalization())
+model.add(AveragePooling2D(pool_size=(2,2),strides=(2,2)))
+model.add(Conv2D(16, (5, 5), strides=(1, 1), activation=‘tanh’, padding=“valid”))
+model.add(AveragePooling2D(pool_size=(2,2),strides=(2,2)
+model.add(Conv2D(120, (5, 5), strides=(1, 1), activation=‘tanh’, padding=“valid”))
+model.add(Flatten())
+model.add(Dense(84,activation=‘tanh’))
+model.add(Dropout(0.2))
+model.add(Dense(10,activation=‘softmax’))
+```
+
+### Alex-Net (2012) by Hinton and Alex Krizhevsky
+
+- AlexNet won the 2012 ImageNet challenge 
+- Input images size is 227x227 pixels in 3 channel color RGB
+- Total parameters: 60 millions
+- Activation: ReLU
+
+![image](https://user-images.githubusercontent.com/43855029/165559539-8bd75470-36c1-45d2-a4d0-e593b74e2e5c.png)
+
+- Sample output of AlexNet:
+
+![image](https://user-images.githubusercontent.com/43855029/165559605-49dcf70a-6c8d-418f-ba8d-2a60fba9d32f.png)
+
+### VGG16 (2014)
+
+- VGG16 runner up of 2014 ImageNet challenge 
+- Image size is 224x224x3
+- 16 layers: 13 ConvNet, 3 Fully Connected
+- Total Parameters: 130M
+
+![image](https://user-images.githubusercontent.com/43855029/165559808-2e7005a0-bfd1-48d7-9f58-5e779a5d9491.png)
+
+### GoogleNet (2014)
+
+- GoogleNet won the 2014 ImageNet challenge 
+- Introduced Inception Network
+- 22 layers deep with 27 pooling layers  and 9 inception models
+
+![image](https://user-images.githubusercontent.com/43855029/165559901-fba35b54-a09a-46e8-8967-47e2e0d9f8c7.png)
 
 # Application of CNN in image classification
 
