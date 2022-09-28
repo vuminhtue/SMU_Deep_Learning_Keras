@@ -315,7 +315,8 @@ def plot_acc_loss(history):
 plot_acc_loss(history)
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/192870625-d48e959c-858c-4eea-b692-601762dc7f10.png)
+![image](https://user-images.githubusercontent.com/43855029/192873763-ddc67e7a-97bb-4ff9-85c5-d61f98b400e0.png)
+
 
 Evaluate on testing data
 
@@ -344,5 +345,5 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/43855029/192873251-b4644c24-81bf-4d14-8bf7-8650cf75dead.png)
 
-
+- Next Let's move on to the next chapter, where we will learn more about Convolutional Neural Network or CNN
 
