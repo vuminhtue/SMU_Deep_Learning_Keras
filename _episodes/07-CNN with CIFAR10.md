@@ -447,120 +447,97 @@ Epoch 10/10
 1563/1563 [==============================] - 5s 4ms/step - loss: 0.3499 - accuracy: 0.8756 - val_loss: 1.0582 - val_accuracy: 0.7045
 ```
 
+By increasing the number of parameters from 226k to 1.6mil, we have the accuracy of training improved from 0.75 to 0.87 and testing 0.6 to 0.7!
 
-
-
-
-
-
-
-## Application of Letnet-5 (1998) to Fashion MNIST?
-
-- AlexNet is the name of CNN architecture, designed by Alex Krizhevsky in collaboration with Ilya Sutskever and Geoffrey Hinton.
-- AlexNet competed in the ImageNet Challenge 2012, the network achieved a top-5 error of 15.3%, more than 10.8 percentage points lower than that of the runner up. 
-- The original paper's primary result was that the depth of the model was essential for its high performance, which was computationally expensive, but made feasible due to the utilization of graphics processing units (GPUs) during training
-
-![image](https://user-images.githubusercontent.com/43855029/162292152-b2fab741-1ddf-477a-9f07-140c4ea2421d.png)
-
-### The architecture of AlexNet
+Now, Let's save the model
 
 ```python
-model = Sequential()
-# C1 Convolution Layer
-model.add(Conv2D(6, (3, 3), strides=(1, 1), activation='tanh', padding='same', input_shape=(28, 28, 1)))
-# S2 Pooling Layer
-model.add(AveragePooling2D(pool_size=(2,2),strides=(2,2)))
-# C3 Convolution Layer
-model.add(Conv2D(16, (5, 5), strides=(1, 1), activation='tanh', padding='valid'))
-# S4 Pooling Layer
-model.add(AveragePooling2D(pool_size=(2,2),strides=(2,2)))
-# C5 Convolution Layer
-model.add(Conv2D(120, (5, 5), strides=(1, 1), activation='tanh', padding='valid'))
-# Flatten to MLP          
-model.add(Flatten())
-# F6 Fully connected Layer         
-model.add(Dense(84,activation='tanh'))
-# Output layer          
-model.add(Dense(10,activation='softmax'))
-# Compile model
-model.compile(optimizer='sgd', loss='categorical_crossentropy',  metrics=['accuracy'])       
+model.save('model2_CNN_CIFAR10.keras')
 ```
 
-### Fit the model
+## Loading a pre-trained model VGG16
+
+- Now we can see that using the data it takes sometime to train the CNN model and it takes longer and longer if you have more and more dataset as well as increasing the number of parameters?
+
+![image](https://user-images.githubusercontent.com/43855029/192888188-32540247-2921-4877-ac74-dbef217a09eb.png)
+
+- Let's Rehearse from the above comparison for  [IMAGENET](https://image-net.org/) challange held every year, where many teams participated with different algorithms to classify 21k+ synset (things) of category from 14 millions+ images (updated number by Sep 2022). Link to download paper [here](https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf)
+
+- The VGG16 - (Very Deep Convolutional Network) model secured first and second place in ImageNet2014 challange. In their research, the VGG16 used 16 layers deep and has about 144 million parameters.
+
+- So instead of training our own model, We can utilize the pre-trained VGG16 model for many other image recognigtion problem.
+
+### Load VGG16 model from tensorflow
 
 ```python
-history = model.fit(X_train, y_train, epochs=10, batch_size=128,
-                    validation_data=(X_test, y_test))       
-```                    
-
-```
-Epoch 1/10
-469/469 [==============================] - 3s 7ms/step - loss: 1.3290 - accuracy: 0.5772 - val_loss: 0.9032 - val_accuracy: 0.6799
-Epoch 2/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.7835 - accuracy: 0.7273 - val_loss: 0.7265 - val_accuracy: 0.7414
-Epoch 3/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.6682 - accuracy: 0.7593 - val_loss: 0.6591 - val_accuracy: 0.7625
-Epoch 4/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.6145 - accuracy: 0.7792 - val_loss: 0.6193 - val_accuracy: 0.7760
-Epoch 5/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.5791 - accuracy: 0.7919 - val_loss: 0.5874 - val_accuracy: 0.7876
-Epoch 6/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.5520 - accuracy: 0.8022 - val_loss: 0.5656 - val_accuracy: 0.7943
-Epoch 7/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.5304 - accuracy: 0.8103 - val_loss: 0.5471 - val_accuracy: 0.8018
-Epoch 8/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.5125 - accuracy: 0.8168 - val_loss: 0.5314 - val_accuracy: 0.8062
-Epoch 9/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.4970 - accuracy: 0.8229 - val_loss: 0.5162 - val_accuracy: 0.8123
-Epoch 10/10
-469/469 [==============================] - 3s 6ms/step - loss: 0.4836 - accuracy: 0.8277 - val_loss: 0.5033 - val_accuracy: 0.8174
+from tensorflow.keras.applications import VGG16
+  
+# load the VGG16 network *pre-trained* on the ImageNet dataset
+model = VGG16(weights="imagenet")
+model.summary()
 ```
 
-### Visulize the output
+### Let's get some images:
 
 ```python
-def plot_acc_loss(history):
-    plt.plot(history.history['accuracy'])
-    plt.plot(history.history['val_accuracy'])
-    plt.title('model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['training', 'validation'], loc='best')
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
-    plt.show()
+!wget https://cdn.britannica.com/29/150929-050-547070A1/lion-Kenya-Masai-Mara-National-Reserve.jpg
 
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
+def show_image(image_path):
+    image = mpimg.imread(image_path)
+    print(image.shape)
+    plt.imshow(image)
+    
+show_image("lion-Kenya-Masai-Mara-National-Reserve.jpg")   
+```    
 
-    plt.xlabel('epoch')
-    plt.legend(['training', 'validation'], loc='best')
-
-    plt.show()
-
-plot_acc_loss(history)
-```
-![image](https://user-images.githubusercontent.com/43855029/162294211-75b48704-faf8-4389-85d7-6fda052c08e9.png)
-
-
-Which one is better? ALexNet using tanh or the previous using ReLU activation function?
-
-### Visulize the output with images and its labels using AlexNet:
+### Use the pretrained VGG16 model to process the image
 
 ```python
-predictions = model.predict(X_test)
-ypreds = np.argmax(predictions, axis=1)
+from tensorflow.keras.preprocessing import image as image_utils
+from tensorflow.keras.applications.vgg16 import preprocess_input
 
-plt.figure(figsize=(10,10))
-for i in range(25):
-    plt.subplot(5,5,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(X_test[i])
-    plt.title(class_names[ypreds[i]])
-plt.show()
+def load_and_process_image(image_path):
+    # Print image's original shape, for reference
+    print('Original image shape: ', mpimg.imread(image_path).shape)
+    
+    # Load in the image with a target size of 224, 224
+    image = image_utils.load_img(image_path, target_size=(224, 224))
+    # Convert the image from a PIL format to a numpy array
+    image = image_utils.img_to_array(image)
+    # Add a dimension for number of images, in our case 1
+    image = image.reshape(1,224,224,3)
+    # Preprocess image to align with original ImageNet dataset
+    image = preprocess_input(image)
+    # Print image's shape after processing
+    print('Processed image shape: ', image.shape)
+    return image
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/162297902-6709919f-78a6-4787-846b-6bfa2399e5e0.png)
+
+### Prediction using VGG16
+Now that we have our image in the right format, we can pass it into our model and get a prediction. We are expecting an output of an array of 1000 elements, which is going to be difficult to read. Fortunately, models loaded directly with Keras have yet another helpful method that will translate that prediction array into a more readable form.
+
+Fill in the following function to implement the prediction:
+
+```python
+from tensorflow.keras.applications.vgg16 import decode_predictions
+
+def readable_prediction(image_path):
+    # Show image
+    show_image(image_path)
+    # Load and pre-process image
+    image = load_and_process_image(image_path)
+    # Make predictions
+    predictions = model.predict(image)
+    # Print predictions in readable form
+    print('Predicted:', decode_predictions(predictions, top=3))
+
+readable_prediction("lion-Kenya-Masai-Mara-National-Reserve.jpg")
+```
+
+### Other pre-trained model?
+
+https://www.tensorflow.org/api_docs/python/tf/keras/applications
