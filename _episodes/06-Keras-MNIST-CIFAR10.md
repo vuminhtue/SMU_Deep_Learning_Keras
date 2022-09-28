@@ -1,13 +1,13 @@
 ---
-title: "MNIST with Dense Network"
+title: "MNIST/CIFAR10 with Dense Network"
 teaching: 20
 exercises: 0
 questions:
-- "Image Classification with MNIST data"
+- "Image Classification with MNIST and CIFAR10 data"
 objectives:
-- "MNIST, Dense Layer"
+- "MNIST, CIFAR10, Dense Layer"
 keypoints:
-- "Classification training, MNIST, keras"
+- "Classification training, MNIST, CIFAR10, keras"
 ---
 ## Using Keras to solve a Image Classification using MNIST data
 
@@ -186,5 +186,47 @@ The model can be improved by adjusting several parameters in the models:
 - Hidden Units in a layer (Width of each layer)
 - Activations Functions
 - Learning Rate
+
+
+## Exercise: Using Keras to solve a Image Classification using CIFAR10 data
+
+### CIFAR10 database
+
+- The CIFAR10 database consisting 60,000 color images with 10 different classes
+- Each image has 32 x 32 pixels with color range from 0-255
+- It is good database for pattern recognition and image classification task (the entire data is clean and ready for use).
+- The dataset was divided into 50,000 images for training and 10,000 images for testing
+- The 10 classes are airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck
+
+### Load library and plot sample data
+
+```python
+from keras.datasets import cifar10
+
+# load data
+(X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
+# Normalized data to range (0, 1):
+X_train, X_test = X_train/255, X_test/255
+
+
+class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer',
+               'dog', 'frog', 'horse', 'ship', 'truck']
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10,10))
+for i in range(49):
+    plt.subplot(7,7,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(X_train[i])
+    # The CIFAR labels happen to be arrays, which is why you need the extra index    
+    plt.xlabel(class_names[y_train[i][0]])
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/43855029/192858299-524f2e86-dd50-4bda-b227-587bde8ddd4d.png)
 
 
