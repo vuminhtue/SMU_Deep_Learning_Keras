@@ -253,6 +253,30 @@ model.add(Flatten())
 model.add(Dense(100, activation='relu'))
 #Output layer contains 10 different number from 0-9
 model.add(Dense(10, activation='softmax'))
+
+model.summary()
+```
+
+```
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 30, 30, 10)        280       
+                                                                 
+ max_pooling2d (MaxPooling2D  (None, 15, 15, 10)       0         
+ )                                                               
+                                                                 
+ flatten (Flatten)           (None, 2250)              0         
+                                                                 
+ dense (Dense)               (None, 100)               225100    
+                                                                 
+ dense_1 (Dense)             (None, 10)                1010      
+                                                                 
+=================================================================
+Total params: 226,390
+Trainable params: 226,390
+Non-trainable params: 0
 ```
 
 ### Compile model
@@ -273,29 +297,25 @@ history = model.fit(X_train, y_train, epochs=10,
 
 ```
 Epoch 1/10
-   1/1563 [..............................] - ETA: 0s - loss: 2.3374 - accuracy: 0.1875WARNING:tensorflow:From /users/tuev/.conda/envs/ML_SKLN/lib/python3.6/site-packages/tensorflow/python/ops/summary_ops_v2.py:1277: stop (from tensorflow.python.eager.profiler) is deprecated and will be removed after 2020-07-01.
-Instructions for updating:
-use `tf.profiler.experimental.stop` instead.
-   2/1563 [..............................] - ETA: 1:35 - loss: 2.3676 - accuracy: 0.1406WARNING:tensorflow:Callbacks method `on_train_batch_end` is slow compared to the batch time (batch time: 0.0051s vs `on_train_batch_end` time: 0.1163s). Check your callbacks.
-1563/1563 [==============================] - 5s 3ms/step - loss: 1.5274 - accuracy: 0.4561 - val_loss: 1.3043 - val_accuracy: 0.5437
+1563/1563 [==============================] - 6s 2ms/step - loss: 1.4979 - accuracy: 0.4661 - val_loss: 1.3041 - val_accuracy: 0.5401
 Epoch 2/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 1.2409 - accuracy: 0.5636 - val_loss: 1.2332 - val_accuracy: 0.5674
+1563/1563 [==============================] - 3s 2ms/step - loss: 1.2271 - accuracy: 0.5668 - val_loss: 1.2155 - val_accuracy: 0.5687
 Epoch 3/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 1.1386 - accuracy: 0.5986 - val_loss: 1.1798 - val_accuracy: 0.5854
+1563/1563 [==============================] - 3s 2ms/step - loss: 1.1153 - accuracy: 0.6101 - val_loss: 1.2015 - val_accuracy: 0.5777
 Epoch 4/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 1.0740 - accuracy: 0.6230 - val_loss: 1.1629 - val_accuracy: 0.5898
+1563/1563 [==============================] - 3s 2ms/step - loss: 1.0302 - accuracy: 0.6395 - val_loss: 1.1256 - val_accuracy: 0.6108
 Epoch 5/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 1.0168 - accuracy: 0.6413 - val_loss: 1.1529 - val_accuracy: 0.5975
+1563/1563 [==============================] - 3s 2ms/step - loss: 0.9635 - accuracy: 0.6622 - val_loss: 1.0992 - val_accuracy: 0.6172
 Epoch 6/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 0.9661 - accuracy: 0.6588 - val_loss: 1.1583 - val_accuracy: 0.5995
+1563/1563 [==============================] - 3s 2ms/step - loss: 0.9080 - accuracy: 0.6826 - val_loss: 1.1595 - val_accuracy: 0.6001
 Epoch 7/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 0.9240 - accuracy: 0.6755 - val_loss: 1.1451 - val_accuracy: 0.6039
+1563/1563 [==============================] - 3s 2ms/step - loss: 0.8541 - accuracy: 0.6997 - val_loss: 1.1124 - val_accuracy: 0.6259
 Epoch 8/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 0.8831 - accuracy: 0.6894 - val_loss: 1.1701 - val_accuracy: 0.6020
+1563/1563 [==============================] - 3s 2ms/step - loss: 0.8037 - accuracy: 0.7167 - val_loss: 1.1263 - val_accuracy: 0.6234
 Epoch 9/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 0.8506 - accuracy: 0.7017 - val_loss: 1.1574 - val_accuracy: 0.6069
+1563/1563 [==============================] - 3s 2ms/step - loss: 0.7567 - accuracy: 0.7343 - val_loss: 1.1237 - val_accuracy: 0.6260
 Epoch 10/10
-1563/1563 [==============================] - 5s 3ms/step - loss: 0.8126 - accuracy: 0.7129 - val_loss: 1.1547 - val_accuracy: 0.6078
+1563/1563 [==============================] - 3s 2ms/step - loss: 0.7154 - accuracy: 0.7509 - val_loss: 1.1630 - val_accuracy: 0.6156
 ```
 
 ### Evaluate the output
@@ -326,10 +346,113 @@ def plot_acc_loss(history):
 plot_acc_loss(model_CNN)
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/192877213-0bb285a2-87e7-4e3c-90d1-b559706496dc.png)
+![image](https://user-images.githubusercontent.com/43855029/192882693-1108d2ba-0f34-45ee-9168-9e0f7fd534d6.png)
 
 ### Discussions:
-- We can see the accuracy increased from 0.44 to 0.7 for training and 0.6 for testing
+- We can see the accuracy increased from 0.44 to 0.75 for training and 0.6 for testing which is the great improvement
+- The deeper the network the better?
+
+### Save the CNN model for CIFAR10
+
+```python
+model.save('model1_CNN_CIFAR10.keras')
+```
+
+### Improving the model?
+
+The model can be more accurate if you increase the size of it.
+
+In the revised version, let increase the size of hidden layers:
+
+```python
+model = Sequential()
+model.add(Conv2D(8, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)))
+
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Conv2D(512, (3, 3), activation='relu'))
+
+model.add(MaxPooling2D((2, 2)))
+model.add(Conv2D(256, (3, 3), activation='relu'))
+
+model.add(Flatten())
+model.add(Dense(100, activation='relu'))
+model.add(Dense(10, activation='softmax'))
+
+# compile model
+model.compile(optimizer='adam', loss='categorical_crossentropy',  metrics=['accuracy'])               
+```
+
+```python
+model.summary()
+```
+
+```
+Model: "sequential_11"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d_30 (Conv2D)          (None, 30, 30, 8)         224       
+                                                                 
+ max_pooling2d_20 (MaxPoolin  (None, 15, 15, 8)        0         
+ g2D)                                                            
+                                                                 
+ conv2d_31 (Conv2D)          (None, 13, 13, 512)       37376     
+                                                                 
+ max_pooling2d_21 (MaxPoolin  (None, 6, 6, 512)        0         
+ g2D)                                                            
+                                                                 
+ conv2d_32 (Conv2D)          (None, 4, 4, 256)         1179904   
+                                                                 
+ flatten_10 (Flatten)        (None, 4096)              0         
+                                                                 
+ dense_19 (Dense)            (None, 100)               409700    
+                                                                 
+ dense_20 (Dense)            (None, 10)                1010      
+                                                                 
+=================================================================
+Total params: 1,628,214
+Trainable params: 1,628,214
+Non-trainable params: 0
+```
+
+Now we can see that the number of parameters increased from 226k to 1.6 million!
+
+Let's train the model
+
+```python
+model_CNN = model.fit(X_train, y_train, epochs=10, 
+                    validation_data=(X_test, y_test))
+```
+
+```
+Epoch 1/10
+1563/1563 [==============================] - 6s 4ms/step - loss: 1.4947 - accuracy: 0.4533 - val_loss: 1.1870 - val_accuracy: 0.5721
+Epoch 2/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 1.1082 - accuracy: 0.6083 - val_loss: 1.0441 - val_accuracy: 0.6349
+Epoch 3/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.9404 - accuracy: 0.6690 - val_loss: 0.9733 - val_accuracy: 0.6665
+Epoch 4/10
+1563/1563 [==============================] - 5s 4ms/step - loss: 0.8229 - accuracy: 0.7118 - val_loss: 0.8952 - val_accuracy: 0.6976
+Epoch 5/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.7262 - accuracy: 0.7439 - val_loss: 0.9003 - val_accuracy: 0.6946
+Epoch 6/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.6406 - accuracy: 0.7754 - val_loss: 0.8999 - val_accuracy: 0.6979
+Epoch 7/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.5609 - accuracy: 0.8028 - val_loss: 0.9167 - val_accuracy: 0.6990
+Epoch 8/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.4875 - accuracy: 0.8279 - val_loss: 0.9412 - val_accuracy: 0.7164
+Epoch 9/10
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.4146 - accuracy: 0.8536 - val_loss: 0.9965 - val_accuracy: 0.7086
+Epoch 10/10
+1563/1563 [==============================] - 5s 4ms/step - loss: 0.3499 - accuracy: 0.8756 - val_loss: 1.0582 - val_accuracy: 0.7045
+```
+
+
+
+
+
+
+
 
 ## Application of Letnet-5 (1998) to Fashion MNIST?
 
