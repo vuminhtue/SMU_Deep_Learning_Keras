@@ -204,11 +204,12 @@ In this chapter, we are using CIFAR10 database with additional layer of Conv2D.
 
 ### Importing libraries
 ```python
-import keras
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.utils import to_categorical
+import pandas as pd
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.utils import to_categorical
 ```
 
 ### Import convolution, max pooling and flatten as mentioned above:
