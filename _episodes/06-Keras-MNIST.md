@@ -77,3 +77,114 @@ print(X_train.shape)
 print(X_test.shape)
 ```
 #### 2. Normalize the image data
+
+```python
+print(X_train.max())
+print(X_test.max())
+X_train = X_train/X_train.max()
+X_test = X_test/X_test.max()
+```
+
+#### 3. Categorical Encoding
+For all kinds of classification it's always better to classify output into categorical encoding, so the number classification would be the same as image of other type classification (car, animal, machine)
+
+
+Here we utilize the Keras's utility [categorically encode values](https://www.tensorflow.org/api_docs/python/tf/keras/utils/to_categorical) named **utils.to_categorical**
+
+```python
+import tensorflow.keras as keras
+num_categories = 10 # Ranges from 0-9
+
+y_train = keras.utils.to_categorical(y_train,num_categories)
+y_test = keras.utils.to_categorical(y_test,num_categories)
+```
+
+### Create Keras Sequential model with Dense Layers
+
+```python
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+```
+
+### Create 2 hidden layers with 512 and 512 hidden nodes each and 10 output layer with Keras:
+
+```python
+# Create a Sequential model
+model = Sequential()
+# Create a first hidden layer, the input for the first hidden layer is input layer which has 3 variables:
+model.add(Dense(units=32,activation='relu',input_shape=(784,)))
+# Create a second hidden layer
+model.add(Dense(units=16,activation='relu'))
+# Create an output layer with only 10 variables:
+model.add(Dense(units = num_categories,activation='softmax'))
+```
+
+### Summarizing the model
+
+```python
+model.summary()
+```
+
+### Compile model
+
+```python
+model.compile(optimizer="sgd",loss='categorical_crossentropy',metrics=['accuracy'])
+```
+
+### Train model
+
+```python
+history = model.fit(X_train,y_train,epochs=10,verbose=1,validation_data=(X_test,y_test))
+y_predict = model.predict(X_test)
+
+from matplotlib import pyplot as plt
+
+def plot_acc_loss(history):
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
+    plt.title('model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['training', 'validation'], loc='best')
+
+    plt.show()
+
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+
+    plt.xlabel('epoch')
+    plt.legend(['training', 'validation'], loc='best')
+
+    plt.show()
+
+plot_acc_loss(history)
+```
+
+### Evaluate on test data
+
+```python
+# Lets take a look at some images 
+import matplotlib.pyplot as plt
+import numpy as np
+for i in range(16):
+    ax = plt.subplot(4, 4, i+1)
+    ax.axis('off')
+    plt.imshow(X_test[i].reshape(28,28), cmap='Greys')
+    plt.title(["guess ", np.argmax(y_predict[i])])
+
+```
+
+### Hyperparameter optimization
+
+
+The model can be improved by adjusting several parameters in the models:
+
+- Number of Epochs
+- Hidden Layers (Number of Layers)
+- Hidden Units in a layer (Width of each layer)
+- Activations Functions
+- Learning Rate
+
+
