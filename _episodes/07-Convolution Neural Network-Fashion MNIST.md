@@ -30,6 +30,13 @@ keypoints:
 
 ### Convolutional Layer (CNN or ConvNet)
 
+#### Hyperparameters:
+  - Layer depths (L)
+  - Stride (S)
+  - Padding (P)
+
+Next we will go into detail of each hyperparameter:
+
 #### Hyperparameter: Depth (L)
 
 - Take a look at the simple gray scale image below which contains 10 pixels on width & height. The color scale has only 2 values (black & white) or (binary -1 and 1), there fore the size of the following image is 10x10x1 (L=1):
