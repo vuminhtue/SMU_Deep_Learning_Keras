@@ -1,5 +1,5 @@
 ---
-title: "MNIST/CIFAR10 with Dense Network"
+title: "Keras Dense Network with MNIST/CIFAR10"
 teaching: 20
 exercises: 0
 questions:
