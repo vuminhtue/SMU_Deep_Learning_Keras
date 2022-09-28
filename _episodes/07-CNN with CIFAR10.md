@@ -455,6 +455,25 @@ Now, Let's save the model
 model.save('model2_CNN_CIFAR10.keras')
 ```
 
+And validating with some testing data
+
+```python
+import numpy as np
+predictions = model.predict(X_test)
+ypreds = np.argmax(predictions, axis=1)
+
+plt.figure(figsize=(10,10))
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(X_test[i].reshape(32,32,3))
+    plt.title(class_names[ypreds[i]])
+plt.show()
+```
+![image](https://user-images.githubusercontent.com/43855029/192893046-811a30b2-01d7-4b6f-bf71-7c3643af8c5d.png)
+
 ## Loading a pre-trained model VGG16
 
 - Now we can see that using the data it takes sometime to train the CNN model and it takes longer and longer if you have more and more dataset as well as increasing the number of parameters?
