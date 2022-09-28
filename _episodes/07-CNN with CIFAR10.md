@@ -1,5 +1,5 @@
 ---
-title: "Convolution Neural Network for image classification: Fashion MNIST"
+title: "Convolution Neural Network for image classification: CIFAR10"
 teaching: 20
 exercises: 0
 questions:
@@ -7,10 +7,9 @@ questions:
 objectives:
 - "Master Keras"
 keypoints:
-- "CNN, keras"
+- "CNN, keras, CIFAR10"
 ---
 # Convolutional Neural Network - CNN
-
 
 - CNNs are one type of ANN which utilize the neuron, kernel, activation function.
 - Inputs must be in images (or assumed to be images)
@@ -199,14 +198,9 @@ model.add(Dense(10,activation=‘softmax’))
 
 # Application of CNN in image classification
 
-## The Fashion MNIST database
-The original MNIST dataset contains a lot of handwritten digits. Members of the AI/ML/Data Science community love this dataset and use it as a benchmark to validate their algorithms. In fact, MNIST is often the first dataset researchers try. "If it doesn't work on MNIST, it won't work at all", they said. "Well, if it does work on MNIST, it may still fail on others."
+## The CIFAR10 database
 
-- Fashion MNIST is very similar to digit MNIST
-- It consisting of a training set of 60,000 examples and a test set of 10,000 examples.
-- Each example is a 28x28 grayscale image, associated with a label from 10 classes. 
-- Zalando intends Fashion-MNIST to serve as a direct drop-in replacement for the original MNIST dataset for benchmarking machine learning algorithms. 
-- It shares the same image size and structure of training and testing splits.
+In this chapter, we are using CIFAR10 database with additional layer of Conv2D.
 
 ### Importing libraries
 ```python
@@ -225,53 +219,24 @@ from tensorflow.keras.layers import AveragePooling2D # Max pooling layers to fur
 from tensorflow.keras.layers import Flatten # flatten data from 2D to column for Dense layer
 ```
 
-### Load Fashion MNIST
+### Load CIFAR10
 
 ```python
-from tensorflow.keras.datasets import fashion_mnist
+from tensorflow.keras.datasets import cifar10
 # load data
-(X_train, y_train), (X_test, y_test) = fashion_mnist.load_data()
+(X_train, y_train), (X_test, y_test) = cifar10.load_data()
 # Normalized data to range (0, 1):
 X_train, X_test = X_train/X_train.max(), X_test/X_test.max()
-
-X_train = X_train.reshape(60000, 28, 28, 1)
-X_test = X_test.reshape(10000, 28, 28, 1)
 ```
 
-Sample ploting:
-```python
-# Sample ploting:
-
-class_names = ['t-shirt/top', 'trouser', 'pullover', 'dress', 'coat',
-               'sandall', 'shirt', 'sneaker', 'bag', 'ankle boot']
-
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(10,10))
-for i in range(49):
-    plt.subplot(7,7,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(X_train[i])
-    # The FMNIST labels happen to be arrays, which is why you need the extra index    
-    plt.title(class_names[y_train[i]])
-plt.show()
-
-```
-
-![image](https://user-images.githubusercontent.com/43855029/162291086-fe8203bf-ebf2-485d-8e08-eb39a0a21103.png)
-
-
-Using One Hot Encoding from Keras to convert the label:
+### Using One Hot Encoding from Keras to convert the label:
 
 ```python
 num_categories = 10 # Ranges from 0-9
-input_shape = (28,28,1) # 28 pixels with 1D color scale
+input_shape = (32,32,3) # 32 pixels with 3D color scale
 
 y_train = tf.keras.utils.to_categorical(y_train,num_categories)
 y_test = tf.keras.utils.to_categorical(y_test,num_categories)
-
 ```
 
 ### Construct Convolutional Neural Network
@@ -284,7 +249,7 @@ model.add(Conv2D(8, (3, 3), strides=(1, 1), activation='relu', input_shape=input
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(28, activation='relu'))
+model.add(Dense(100, activation='relu'))
 #Output layer contains 10 different number from 0-9
 model.add(Dense(10, activation='softmax'))
 ```
@@ -307,25 +272,29 @@ history = model.fit(X_train, y_train, epochs=10,
 
 ```
 Epoch 1/10
-1875/1875 [==============================] - 10s 5ms/step - loss: 0.7601 - accuracy: 0.7301 - val_loss: 0.5876 - val_accuracy: 0.7793
+   1/1563 [..............................] - ETA: 0s - loss: 2.3374 - accuracy: 0.1875WARNING:tensorflow:From /users/tuev/.conda/envs/ML_SKLN/lib/python3.6/site-packages/tensorflow/python/ops/summary_ops_v2.py:1277: stop (from tensorflow.python.eager.profiler) is deprecated and will be removed after 2020-07-01.
+Instructions for updating:
+use `tf.profiler.experimental.stop` instead.
+   2/1563 [..............................] - ETA: 1:35 - loss: 2.3676 - accuracy: 0.1406WARNING:tensorflow:Callbacks method `on_train_batch_end` is slow compared to the batch time (batch time: 0.0051s vs `on_train_batch_end` time: 0.1163s). Check your callbacks.
+1563/1563 [==============================] - 5s 3ms/step - loss: 1.5274 - accuracy: 0.4561 - val_loss: 1.3043 - val_accuracy: 0.5437
 Epoch 2/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.5157 - accuracy: 0.8159 - val_loss: 0.5114 - val_accuracy: 0.8169
+1563/1563 [==============================] - 5s 3ms/step - loss: 1.2409 - accuracy: 0.5636 - val_loss: 1.2332 - val_accuracy: 0.5674
 Epoch 3/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.4652 - accuracy: 0.8346 - val_loss: 0.4645 - val_accuracy: 0.8399
+1563/1563 [==============================] - 5s 3ms/step - loss: 1.1386 - accuracy: 0.5986 - val_loss: 1.1798 - val_accuracy: 0.5854
 Epoch 4/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.4337 - accuracy: 0.8476 - val_loss: 0.4469 - val_accuracy: 0.8437
+1563/1563 [==============================] - 5s 3ms/step - loss: 1.0740 - accuracy: 0.6230 - val_loss: 1.1629 - val_accuracy: 0.5898
 Epoch 5/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.4080 - accuracy: 0.8558 - val_loss: 0.4232 - val_accuracy: 0.8517
+1563/1563 [==============================] - 5s 3ms/step - loss: 1.0168 - accuracy: 0.6413 - val_loss: 1.1529 - val_accuracy: 0.5975
 Epoch 6/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.3870 - accuracy: 0.8637 - val_loss: 0.4086 - val_accuracy: 0.8554
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.9661 - accuracy: 0.6588 - val_loss: 1.1583 - val_accuracy: 0.5995
 Epoch 7/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.3679 - accuracy: 0.8703 - val_loss: 0.3773 - val_accuracy: 0.8685
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.9240 - accuracy: 0.6755 - val_loss: 1.1451 - val_accuracy: 0.6039
 Epoch 8/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.3529 - accuracy: 0.8745 - val_loss: 0.3680 - val_accuracy: 0.8710
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.8831 - accuracy: 0.6894 - val_loss: 1.1701 - val_accuracy: 0.6020
 Epoch 9/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.3395 - accuracy: 0.8798 - val_loss: 0.3526 - val_accuracy: 0.8751
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.8506 - accuracy: 0.7017 - val_loss: 1.1574 - val_accuracy: 0.6069
 Epoch 10/10
-1875/1875 [==============================] - 9s 5ms/step - loss: 0.3278 - accuracy: 0.8839 - val_loss: 0.3484 - val_accuracy: 0.8771
+1563/1563 [==============================] - 5s 3ms/step - loss: 0.8126 - accuracy: 0.7129 - val_loss: 1.1547 - val_accuracy: 0.6078
 ```
 
 ### Evaluate the output
@@ -353,11 +322,13 @@ def plot_acc_loss(history):
 
     plt.show()
 
-plot_acc_loss(history)
+plot_acc_loss(model_CNN)
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/162291733-4a32caf2-3209-492a-b2b2-601a42a3deb8.png)
+![image](https://user-images.githubusercontent.com/43855029/192877213-0bb285a2-87e7-4e3c-90d1-b559706496dc.png)
 
+### Discussions:
+- We can see the accuracy increased from 0.44 to 0.7 for training and 0.6 for testing
 
 ## Application of Letnet-5 (1998) to Fashion MNIST?
 
