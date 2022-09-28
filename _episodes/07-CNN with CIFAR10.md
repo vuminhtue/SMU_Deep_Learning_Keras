@@ -484,6 +484,9 @@ plt.show()
 
 - The VGG16 - (Very Deep Convolutional Network) model secured first and second place in ImageNet2014 challange. In their research, the VGG16 used 16 layers deep and has about 144 million parameters.
 
+![image](https://user-images.githubusercontent.com/43855029/192893697-ef218548-c975-4486-8312-66316b0ca440.png)
+
+
 - So instead of training our own model, We can utilize the pre-trained VGG16 model for many other image recognigtion problem.
 
 ### Load VGG16 model from tensorflow
