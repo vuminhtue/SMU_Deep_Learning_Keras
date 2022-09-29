@@ -16,13 +16,13 @@ Here we use 1 node with P100 GPU to do the installation:
 
 ### From login node, request a compute node with GPU:
 
-- To request Pascal P100 GPU:
+- To request a Tesla Pascal P100 GPU:
 
 ```bash
 $ srun -N1 -G1 -c10 -p gpgpu-1 --mem=64G --pty $SHELL
 ```
 
-- To request Volta V100 GPU:
+- To request a Tesla Volta V100 GPU:
 
 ```bash
 $ srun -N1 --gres=gpu:volta:1 -c10 -p v100x8 --mem=64G --pty $SHELL
