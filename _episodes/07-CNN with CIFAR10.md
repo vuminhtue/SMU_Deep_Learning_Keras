@@ -763,8 +763,6 @@ def readable_prediction(image_path):
 readable_prediction("lion-Kenya-Masai-Mara-National-Reserve.jpg")
 ```
 
-![image](https://user-images.githubusercontent.com/43855029/193933781-8d57c620-f374-4f98-8fe2-2723848f706b.png)
-
 ```
 (1085, 1600, 3)
 Original image shape:  (1085, 1600, 3)
