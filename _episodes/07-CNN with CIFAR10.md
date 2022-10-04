@@ -460,7 +460,7 @@ And validating with some testing data
 ```python
 import numpy as np
 predictions = model.predict(X_test)
-ypreds = np.argmax(predictions, axis=1)
+ypreds = pd.Series(np.argmax(predictions, axis=1))
 
 plt.figure(figsize=(10,10))
 for i in range(25):
@@ -473,6 +473,149 @@ for i in range(25):
 plt.show()
 ```
 ![image](https://user-images.githubusercontent.com/43855029/192893046-811a30b2-01d7-4b6f-bf71-7c3643af8c5d.png)
+
+## Cluster Visualization using PCA
+Principal component analysis (PCA) is a technique that transforms high-dimensions data into lower-dimensions while retaining as much information as possible.
+
+![image](https://user-images.githubusercontent.com/43855029/193931906-792bb18b-3578-4433-b8ed-592a43e57611.png)
+
+In this exercise, we implement the PCA technique to clusterize the CIFAR10 dataset
+
+```python
+from sklearn import decomposition
+pca = decomposition.PCA(n_components=10)
+pca_pred = pca.fit_transform(predictions)
+```
+
+Convert to DataFrame
+
+```python
+df_pca = pd.DataFrame(pca_pred,columns=['PC1','PC2','PC3','PC4','PC5','PC6','PC7','PC8','PC9','PC10'])
+df_pca['Cluster'] = y_test
+df_pca['Cluster_name'] = ypreds.apply(lambda x:class_names[x])
+```
+
+Visualize the Principal Components:
+
+```python
+import seaborn as sns
+df_pca_var = pd.DataFrame({'var':pca.explained_variance_ratio_,
+             'PC':['PC1','PC2','PC3','PC4','PC5','PC6','PC7','PC8','PC9','PC10']})
+sns.barplot(x='PC',y="var", 
+           data=df_pca_var);
+```
+
+![image](https://user-images.githubusercontent.com/43855029/193932226-03d6a413-2c23-4165-9e6a-99368b5c533c.png)
+
+
+```python
+sns.lmplot( x="PC1", y="PC2",
+  data=df_pca, 
+  fit_reg=False, 
+  hue='Cluster_name', # color by cluster
+  legend=True,
+  scatter_kws={"s": 5}, # specify the point size
+  height=8)           
+```  
+
+![image](https://user-images.githubusercontent.com/43855029/193932338-a57ba2ea-7bd7-48df-8938-55f706f7679d.png)
+
+We can also visualize using images:
+
+```python
+tx, ty = df_pca['PC1'],df_pca['PC2']
+tx = (tx-np.min(tx)) / (np.max(tx) - np.min(tx))
+ty = (ty-np.min(ty)) / (np.max(ty) - np.min(ty))
+```
+
+```python
+from PIL import Image
+width = 4000
+height = 3000
+max_dim = 100
+full_image_PCA = Image.new('RGB', (width, height))
+for idx, x in enumerate(X_test):
+    tile = Image.fromarray(np.uint8(x * 255))
+    rs = max(1, tile.width / max_dim, tile.height / max_dim)
+    tile = tile.resize((int(tile.width / rs),
+                        int(tile.height / rs)),
+                       Image.Resampling.LANCZOS)
+    full_image.paste(tile, (int((width-max_dim) * tx[idx]),
+                            int((height-max_dim) * ty[idx])))
+full_image_PCA   
+```
+
+![image](https://user-images.githubusercontent.com/43855029/193932551-6d98f0e2-9382-4e8d-bf22-0d577e400822.png)
+
+## Clusters Visualization using t-SNE
+
+t-Distributed Stochastic Neighbor Embedding (t-SNE) is an unsupervised, non-linear technique primarily used for data exploration and visualizing high-dimensional data.
+
+In simpler terms, t-SNE gives you a feel or intuition of how the data is arranged in a high-dimensional space. It was developed by Laurens van der Maatens and Geoffrey Hinton in 2008.
+
+### t-SNE vs PCA?
+- PCA developed in 1933 whilst t-SNE developed in 2008
+- PCA is linear dimension reduction technique, that seeks to maximize variance and preserves large pairwise distances. In other words, things that are different end up far apart. This can lead to poor visualization especially when dealing with non-linear manifold structures.
+- SNE differs from PCA by preserving only small pairwise distances or local similarities whereas PCA is concerned with preserving large pairwise distances to maximize variance.
+
+[More Information](https://towardsdatascience.com/an-introduction-to-t-sne-with-python-example-5a3a293108d1)
+
+```python
+from sklearn.manifold import TSNE
+model_tsne = TSNE(n_components=2)
+tsne_pred = model_tsne.fit_transform(predictions)
+```
+
+Convert to DataFrame
+
+```python
+df_tsne = pd.DataFrame(tsne_pred,columns=['TSNE1','TSNE2'])
+df_tsne['Cluster'] = ypreds
+df_tsne['Cluster_name'] = ypreds.apply(lambda x:class_names[x])
+```
+
+Visualize with seaborn
+
+```python
+tsne1 = sns.lmplot( x="TSNE1", y="TSNE2",
+  data=df_tsne, 
+  fit_reg=False, 
+  hue='Cluster_name', # color by cluster
+  legend=True,
+  scatter_kws={"s": 5}, # specify the point size
+  height=8)
+#tsne1.savefig('TSNE1.png')  
+```  
+
+
+Visualize with images
+
+```python
+tx, ty = df_tsne['TSNE1'], df_tsne['TSNE2']
+tx = (tx-np.min(tx)) / (np.max(tx) - np.min(tx))
+ty = (ty-np.min(ty)) / (np.max(ty) - np.min(ty))
+```
+
+```python
+from PIL import Image
+width = 4000
+height = 3000
+max_dim = 100
+full_image_TSNE = Image.new('RGB', (width, height))
+for idx, x in enumerate(X_test):
+    tile = Image.fromarray(np.uint8(x * 255))
+    rs = max(1, tile.width / max_dim, tile.height / max_dim)
+    tile = tile.resize((int(tile.width / rs),
+                        int(tile.height / rs)),
+                       Image.Resampling.LANCZOS)
+    full_image.paste(tile, (int((width-max_dim) * tx[idx]),
+                            int((height-max_dim) * ty[idx])))
+full_image_TSNE  
+#full_image_TSNE.save("TSNE2.png")
+```
+
+![image](https://user-images.githubusercontent.com/43855029/193933220-f0d1a5bc-58cd-4221-98ff-7f4ed3202fbe.png)
+
 
 ## Loading a pre-trained model VGG16
 
