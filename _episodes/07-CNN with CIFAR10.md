@@ -520,32 +520,7 @@ sns.lmplot( x="PC1", y="PC2",
 
 ![image](https://user-images.githubusercontent.com/43855029/193932338-a57ba2ea-7bd7-48df-8938-55f706f7679d.png)
 
-We can also visualize using images:
-
-```python
-tx, ty = df_pca['PC1'],df_pca['PC2']
-tx = (tx-np.min(tx)) / (np.max(tx) - np.min(tx))
-ty = (ty-np.min(ty)) / (np.max(ty) - np.min(ty))
-```
-
-```python
-from PIL import Image
-width = 4000
-height = 3000
-max_dim = 100
-full_image_PCA = Image.new('RGB', (width, height))
-for idx, x in enumerate(X_test):
-    tile = Image.fromarray(np.uint8(x * 255))
-    rs = max(1, tile.width / max_dim, tile.height / max_dim)
-    tile = tile.resize((int(tile.width / rs),
-                        int(tile.height / rs)),
-                       Image.Resampling.LANCZOS)
-    full_image.paste(tile, (int((width-max_dim) * tx[idx]),
-                            int((height-max_dim) * ty[idx])))
-full_image_PCA   
-```
-
-![image](https://user-images.githubusercontent.com/43855029/193932551-6d98f0e2-9382-4e8d-bf22-0d577e400822.png)
+It's hard to clearly identify the clusters with images using PCA approach so we move on to other method:
 
 ## Clusters Visualization using t-SNE
 
@@ -586,6 +561,8 @@ tsne1 = sns.lmplot( x="TSNE1", y="TSNE2",
   height=8)
 #tsne1.savefig('TSNE1.png')  
 ```  
+
+![image](https://user-images.githubusercontent.com/43855029/194102033-bf971494-0c02-4651-8335-0c13f21b3b9e.png)
 
 
 Visualize with images
