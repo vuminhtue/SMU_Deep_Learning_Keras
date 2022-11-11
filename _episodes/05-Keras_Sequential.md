@@ -20,7 +20,7 @@ import numpy as np
 from sklearn.impute import KNNImputer
 from sklearn.model_selection import train_test_split
 
-data_df = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/vuminhtue/Machine-Learning-Python/master/data/r_airquality.csv'))
+data_df = pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/vuminhtue/SMU_Deep_Learning_Keras/master/data/r_airquality.csv'))
 
 imputer = KNNImputer(n_neighbors=2, weights="uniform")
 data_knnimpute = pd.DataFrame(imputer.fit_transform(data_df))
